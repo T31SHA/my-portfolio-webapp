@@ -78,17 +78,17 @@ export function Contact() {
               <label className="relative block">
                 <span className="sr-only">Name</span>
                 <FieldIcon><UserRound className="h-4 w-4" strokeWidth={1.5} /></FieldIcon>
-                <input required name="name" type="text" placeholder="Name" className="focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl border border-border bg-surface-2 py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
+                <input required name="name" type="text" placeholder="Name" className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
               </label>
               <label className="relative block">
                 <span className="sr-only">Email</span>
                 <FieldIcon><AtSign className="h-4 w-4" strokeWidth={1.5} /></FieldIcon>
-                <input required name="email" type="email" placeholder="Email" className="focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl border border-border bg-surface-2 py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
+                <input required name="email" type="email" placeholder="Email" className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
               </label>
               <label className="relative block">
                 <span className="sr-only">Message</span>
                 <FieldIcon><MessageCircle className="h-4 w-4" strokeWidth={1.5} /></FieldIcon>
-                <textarea required name="message" placeholder="Message" rows={5} className="focus-visible:ring-2 focus-visible:ring-ring w-full resize-none rounded-xl border border-border bg-surface-2 py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
+                <textarea required name="message" placeholder="Message" rows={5} className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full resize-none rounded-xl py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
               </label>
               <button type="submit" className="btn-pill focus-visible:ring-2 focus-visible:ring-ring w-full focus-visible:outline-none">
                 <Send className="mr-2 h-4 w-4" strokeWidth={1.5} />
@@ -105,11 +105,11 @@ export function Contact() {
             <form className="mt-7 space-y-4" onSubmit={submitComment}>
               <label className="block">
                 <span className="sr-only">Name</span>
-                <input value={guestName} onChange={(event) => { setGuestName(event.target.value); guardGuestbook() }} type="text" placeholder="Name (optional)" className="focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl border border-border bg-surface-2 px-3 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
+                <input value={guestName} onChange={(event) => { setGuestName(event.target.value); guardGuestbook() }} type="text" placeholder="Name (optional)" className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl px-3 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
               </label>
               <label className="block">
                 <span className="sr-only">Comment</span>
-                <textarea required value={guestComment} onChange={(event) => { setGuestComment(event.target.value); guardGuestbook() }} placeholder="Leave a comment" rows={4} className="focus-visible:ring-2 focus-visible:ring-ring w-full resize-none rounded-xl border border-border bg-surface-2 px-3 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
+                <textarea required value={guestComment} onChange={(event) => { setGuestComment(event.target.value); guardGuestbook() }} placeholder="Leave a comment" rows={4} className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full resize-none rounded-xl px-3 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
               </label>
               <label className="sr-only">
                 Attach image (optional)
@@ -124,7 +124,7 @@ export function Contact() {
               <div className="space-y-5">
                 {comments.map((comment, index) => (
                   <article key={`${comment.time}-${index}`} className="flex gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs text-muted-foreground" aria-hidden="true">
+                    <div className="glass-surface flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-mono text-xs text-muted-foreground" aria-hidden="true">
                       {comment.name.slice(0, 2).toUpperCase()}
                     </div>
                     <div className="min-w-0">

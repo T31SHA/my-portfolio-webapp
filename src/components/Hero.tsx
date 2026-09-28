@@ -41,7 +41,7 @@ export function Hero() {
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-border px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted-foreground"
+                className="glass-surface rounded-full px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted-foreground"
               >
                 {tag}
               </span>
@@ -85,8 +85,8 @@ export function Hero() {
             </div>
             <div className="h-16 w-px bg-hairline" aria-hidden="true" />
             <motion.div className="relative z-10 origin-top" style={{ rotate: rotation }}>
-              <div className="polaroid-shadow relative bg-foreground p-3 pb-10 [border-radius:2px]">
-                <span className="absolute -top-3 left-4 -rotate-6 bg-surface-2 px-3 py-1 font-mono text-[0.65rem] tracking-[0.18em] text-foreground shadow-sm">
+              <div className="polaroid-shadow glass-surface relative rounded-2xl p-3 pb-10">
+                <span className="glass-surface absolute -top-3 left-4 -rotate-6 rounded-md px-3 py-1 font-mono text-[0.65rem] tracking-[0.18em] text-foreground shadow-sm">
                   T31SHA
                 </span>
                 <img
@@ -94,7 +94,7 @@ export function Hero() {
                   alt="Sharahbil Abdi speaking at a podium in a navy academic gown and orange stole"
                   width={768}
                   height={960}
-                  className="aspect-[4/5] w-full object-cover"
+                  className="aspect-[4/5] w-full rounded-lg object-cover"
                 />
               </div>
             </motion.div>

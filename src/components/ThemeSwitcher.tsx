@@ -15,7 +15,7 @@ const themes: { id: BackgroundTheme; label: string; icon: typeof Moon }[] = [
 
 export function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
   return (
-    <div className="fixed bottom-4 right-4 z-[60] flex max-w-[calc(100vw-2rem)] items-center gap-1 overflow-x-auto rounded-full border border-border bg-background/80 p-1 backdrop-blur-md" aria-label="Background theme">
+    <div className="glass-surface fixed bottom-4 right-4 z-[60] flex max-w-[calc(100vw-2rem)] items-center gap-1 overflow-x-auto rounded-full p-1" aria-label="Background theme">
       {themes.map(({ id, label, icon: Icon }) => (
         <button
           key={id}
@@ -26,7 +26,7 @@ export function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
           onClick={() => setTheme(id)}
           className={cn(
             'focus-visible:ring-2 focus-visible:ring-ring flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-2 font-mono text-[0.575rem] uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none',
-            theme === id && 'bg-secondary text-foreground',
+            theme === id && 'bg-foreground/10 text-foreground shadow-sm shadow-black/10',
           )}
         >
           <Icon className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />

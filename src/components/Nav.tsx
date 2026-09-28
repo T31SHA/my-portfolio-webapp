@@ -43,7 +43,7 @@ export function Nav() {
     <motion.nav
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
-        scrolled && 'border-b border-border bg-background/80 backdrop-blur-md',
+        scrolled && 'border-b border-foreground/10 bg-background/45 shadow-lg shadow-black/10 backdrop-blur-2xl',
       )}
       aria-label="Primary navigation"
     >
@@ -54,7 +54,7 @@ export function Nav() {
         >
           sharahbil.dev
         </a>
-        <div className="flex min-w-0 items-center gap-0 rounded-full border border-border/60 bg-background/25 p-1 sm:gap-0.5">
+        <div className="glass-surface flex min-w-0 items-center gap-0 rounded-full p-1 sm:gap-0.5">
           {links.map((link) => {
             const active = activeSection === link.id
             return (
@@ -64,7 +64,7 @@ export function Nav() {
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'focus-ring whitespace-nowrap rounded-full px-1.5 py-1.5 text-[0.58rem] text-muted-foreground transition-colors hover:text-foreground sm:px-3 sm:text-sm',
-                  active && 'bg-secondary text-foreground',
+                  active && 'bg-foreground/10 text-foreground shadow-sm shadow-black/10',
                 )}
               >
                 {link.label}

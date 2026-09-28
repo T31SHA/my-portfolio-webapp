@@ -73,7 +73,7 @@ function ProjectsPanel() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="flex items-center gap-1.5 border-b border-border bg-surface-2 px-4 py-3" aria-hidden="true">
+          <div className="flex items-center gap-1.5 border-b border-foreground/10 bg-foreground/[0.04] px-4 py-3 backdrop-blur-xl" aria-hidden="true">
             <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
             <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
             <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
@@ -102,7 +102,7 @@ function ProjectsPanel() {
             <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">{project.description}</p>
             <div className="mt-5 flex flex-wrap gap-2">
               {project.tags.map((tag) => (
-                <span key={tag} className="rounded-full border border-border px-2 py-1 font-mono text-[0.575rem] uppercase tracking-[0.1em] text-muted-foreground">
+                <span key={tag} className="rounded-full border border-foreground/15 bg-foreground/[0.04] px-2 py-1 font-mono text-[0.575rem] uppercase tracking-[0.1em] text-muted-foreground">
                   {tag}
                 </span>
               ))}
@@ -188,7 +188,7 @@ export function Showcase() {
               onClick={() => setTab(id)}
               className={cn(
                 'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none whitespace-nowrap rounded-full px-4 py-2 text-xs text-muted-foreground transition-colors hover:text-foreground sm:text-sm',
-                tab === id && 'bg-secondary text-foreground',
+                tab === id && 'bg-foreground/10 text-foreground shadow-sm shadow-black/10',
               )}
             >
               {label}
