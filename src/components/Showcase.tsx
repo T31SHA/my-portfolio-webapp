@@ -12,36 +12,42 @@ const projects = [
     description: 'Predictive model analyzing user behavior patterns to support product and engagement decisions.',
     tags: ['Python', 'scikit-learn', 'Pandas'],
     cover: '/assets/cover-01.svg',
+    href: 'https://github.com/T31SHA/User-Behaviour_Prediction',
   },
   {
     title: 'Customer Churn Prediction',
     description: 'Machine learning model identifying at-risk customers to support retention strategy.',
     tags: ['XGBoost', 'Pandas', 'Matplotlib'],
     cover: '/assets/cover-02.svg',
-  },
-  {
-    title: 'Aviation Risk Analysis',
-    description: 'Statistical analysis of aviation safety data surfacing key risk factors and trends.',
-    tags: ['Python', 'NumPy', 'Tableau'],
-    cover: '/assets/cover-03.svg',
+    href: 'https://github.com/T31SHA/Customer-Churn_Prediction',
   },
   {
     title: 'NSE Stock Market Predictions',
     description: 'Time-series forecasting for Nairobi Securities Exchange stock movements.',
-    tags: ['TensorFlow', 'Time-series', 'Plotly'],
+    tags: ['Python', 'Time-series', 'Jupyter'],
+    cover: '/assets/cover-03.svg',
+    href: 'https://github.com/T31SHA/NSE--Stock-Market_-Predictions',
+  },
+  {
+    title: 'Drought Forecasting & Prediction',
+    description: 'Multi-horizon SPEI drought forecasts for northwestern Algeria, built from 76 years of climate data.',
+    tags: ['Python', 'XGBoost', 'Streamlit'],
     cover: '/assets/cover-04.svg',
+    href: 'https://github.com/T31SHA/Drought-Forcasting_Prediction',
   },
   {
-    title: 'Food Security Analysis',
-    description: 'Data-driven analysis of food security indicators and trends across regions.',
-    tags: ['Pandas', 'SciPy', 'Seaborn'],
+    title: 'Nairobi Flood Guard AI',
+    description: 'Flood susceptibility analysis and matatu route optimization for flood-aware travel in Kenya.',
+    tags: ['Flood Risk', 'Route Optimization', 'Tableau'],
     cover: '/assets/cover-05.svg',
+    href: 'https://github.com/T31SHA/Nairobi_Flood_Guard-AI',
   },
   {
-    title: 'Food Prediction (Kenya)',
-    description: 'Predictive modeling for food production and demand forecasting in Kenya.',
-    tags: ['PyTorch', 'Pandas', 'mlflow'],
+    title: 'CassavaWatch',
+    description: 'Mobile-first cassava disease diagnosis with treatment advice in English or Swahili, including offline support.',
+    tags: ['Python', 'Plant Disease', 'Offline-ready'],
     cover: '/assets/cover-06.svg',
+    href: 'https://github.com/T31SHA/CassavaWatch',
   },
 ]
 
@@ -90,7 +96,7 @@ function ProjectsPanel() {
             <div className="flex items-start justify-between gap-3">
               <h3 className="font-semibold leading-6">{project.title}</h3>
               <a
-                href="https://github.com/T31SHA"
+                href={project.href}
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`${project.title} on GitHub`}
