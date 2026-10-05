@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rare Air — Ladakh</title>
+    <meta name="description" content="Rare Air: nine days at four thousand metres. A slow-travel journey through Ladakh." />
+    <style>
+      :root {
+        --paper: #ede4d4;
+        --ink: #241a12;
+        --ochre: #b08b5c;
+        --umber: #6b4a32;
+        --cobalt: #2e5c8a;
+        --display: "Cormorant Garamond", "Cormorant", "EB Garamond", Garamond, "Times New Roman", serif;
+        --ui: "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
+
+        /* Written by JS, smoothed 0..1 per beat. Every layer reads these. */
+        --b0: 0;  /* world settles   0–720    */
+        --b1: 0;  /* type leaves     780–1340 */
+        --b2: 0;  /* gate rises      1220–2020 */
+        --b3: 0;  /* gate parts      2350–3200 */
+        --b4: 0;  /* courtyard in    2180–2850 */
+        --b5: 0;  /* defocus         3340–3960 */
+        --c1: 0;  /* caption one */
+        --c2: 0;  /* caption two */
+        --mx: 0;  /* pointer, -1..1 */
+        --my: 0;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body { margin: 0; }
+      body {
+        background: var(--ink);
+        color: var(--paper);
+        font-family: var(--ui);
+        -webkit-font-smoothing: antialiased;
+      }
+      img, video { display: block; }
+
+      /* ---------- mechanism ---------- */
+      .track {
+        position: relative;
+        height: calc(4100px + 100vh); /* 4100px of scroll distance */
+      }
+      .stage {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100svh;
+        overflow: hidden;
+        background: #0d1a2b;
+        isolation: isolate;
+      }
+      .layer {
+        position: absolute;
+        pointer-events: none;
+        user-select: none;
+        will-change: transform, opacity, filter;
+      }
+      .bleed { inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+      /* z0 — sky */
+      .sky {
+        z-index: 0;
+        transform:
+          translate(calc(var(--mx) * -6px), calc(var(--my) * -4px))
+          scale(1.05);
+      }
+
+      /* z1 — ridge */
+      .ridge {
+        z-index: 1;
+        left: 50%;
+        bottom: 34%;
+        width: 110%;
+        height: auto;
+        opacity: calc(.58 + .2 * var(--b0) - .4 * var(--b2));
+        mix-blend-mode: screen;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 70%, transparent 100%);
+        mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 70%, transparent 100%);
+        transform-origin: 50% 100%;
+        transform:
+          translateX(calc(-50% + var(--mx) * -10px))
+          translateY(calc(54px * var(--b0) + var(--my) * -3px))
+          scale(calc(1 - .08 * var(--b0) + .22 * var(--b2)));
+        filter: blur(calc(2px * var(--b2)));
+      }
+
+      /* z2 — hills */
+      .hills {
+        z-index: 2;
+        left: 50%;
+        bottom: 0;
+        width: 161%;
+        height: auto;
+        transform-origin: 50% 100%;
+        transform:
+          translateX(calc(-50% + var(--mx) * -18px))
+          scale(calc(1 - .30 * var(--b0) + .55 * var(--b2)));
+        filter: blur(calc(3px * var(--b2)));
+      }
+
+      /* z3 — monastery, flush to the bottom edge */
+      .monastery {
+        z-index: 3;
+        left: 50%;
+        bottom: 0;
+        margin: 0;
+        width: min(46vw, 760px);
+        height: auto;
+        transform-origin: 50% 100%;
+        transform:
+          translateX(calc(-50% + var(--mx) * -28px))
+          scale(calc(1 + .15 * var(--b0) + .45 * var(--b2)));
+        opacity: calc(1 - var(--b2));
+      }
+
+      /* z4 — type */
+      .title {
+        position: absolute;
+        z-index: 4;
+        left: 0;
+        right: 0;
+        top: 15vh;
+        margin: 0;
+        text-align: center;
+        font-family: var(--display);
+        font-weight: 300;
+        font-size: clamp(84px, 17vw, 300px);
+        line-height: .9;
+        text-transform: uppercase;
+        color: var(--paper);
+        --ls: calc(.16em + .05em * var(--b1));
+        letter-spacing: var(--ls);
+        padding-left: var(--ls); /* re-centre: tracking adds a trailing gap */
+        text-shadow: 0 2px 40px rgba(13, 26, 43, .35);
+        opacity: calc(1 - var(--b1));
+        transform:
+          translate(calc(var(--mx) * -8px), calc(-230px * var(--b1)));
+        pointer-events: none;
+      }
+      .kicker {
+        position: absolute;
+        z-index: 4;
+        left: 0;
+        right: 0;
+        top: calc(15vh - 30px);
+        text-align: center;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .32em;
+        text-transform: uppercase;
+        color: var(--ochre);
+        opacity: calc(1 - var(--b1));
+        transform: translateY(calc(-230px * var(--b1)));
+      }
+
+      .lede {
+        position: absolute;
+        z-index: 4;
+        left: 50%;
+        bottom: 7vh;
+        width: min(620px, 88vw);
+        padding: 42px 56px;
+        text-align: center;
+        color: var(--ink);
+        background: radial-gradient(ellipse 50% 50% at 50% 50%,
+          rgba(237, 228, 212, .9) 0%,
+          rgba(237, 228, 212, .72) 45%,
+          rgba(237, 228, 212, 0) 100%);
+        opacity: calc(1 - var(--b1));
+        transform: translate(-50%, calc(80px * var(--b1)));
+      }
+      .lede p {
+        margin: 0;
+        font-size: clamp(15px, 1.35vw, 19px);
+        line-height: 1.55;
+        font-weight: 400;
+      }
+      .lede p + p {
+        margin-top: 14px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: .28em;
+        text-transform: uppercase;
+        color: var(--umber);
+      }
+
+      /* z5 — courtyard */
+      .courtyard {
+        z-index: 5;
+        inset: 0;
+        opacity: var(--b4);
+        transform:
+          translate(calc(var(--mx) * -10px), calc(var(--my) * -6px))
+          scale(calc(1.19 - .16 * var(--b4))); /* 1.16 → 1.0, plus 3% overscan so blur and pointer drift never expose an edge */
+        filter: blur(calc(11px * var(--b5))) brightness(calc(1 - .38 * var(--b5)));
+      }
+      .courtyard video { opacity: 0; transition: opacity .4s ease; }
+      .stage[data-video="on"] .courtyard video { opacity: 1; }
+      .vignette {
+        z-index: 5;
+        inset: 0;
+        opacity: var(--b5);
+        background: radial-gradient(ellipse at 50% 50%,
+          rgba(20, 13, 8, 0) calc(68% - 42% * var(--b5)),
+          rgba(20, 13, 8, .88) 100%);
+      }
+
+      /* z6 — gate */
+      .gate {
+        z-index: 6;
+        opacity: var(--b2);
+      }
+      .gate-l {
+        transform-origin: 26% 50%;
+        transform:
+          translate(calc(-56vw * var(--b3) + var(--mx) * -40px), calc(16vh * (1 - var(--b2))))
+          scale(calc(.52 + .48 * var(--b2) + .6 * var(--b3)));
+      }
+      .gate-r {
+        transform-origin: 74% 50%;
+        transform:
+          translate(calc(56vw * var(--b3) + var(--mx) * -40px), calc(16vh * (1 - var(--b2))))
+          scale(calc(.52 + .48 * var(--b2) + .6 * var(--b3)));
+      }
+
+      /* z7 — captions */
+      .caption {
+        position: absolute;
+        z-index: 7;
+        width: min(340px, 80vw);
+        padding: 22px 24px 24px;
+        background: rgba(237, 228, 212, .9);
+        color: var(--ink);
+        border-left: 2px solid var(--ochre);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+      .caption small {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: .28em;
+        text-transform: uppercase;
+        color: var(--cobalt);
+      }
+      .caption h2 {
+        margin: 0 0 8px;
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 1.05;
+      }
+      .caption p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--umber); }
+      .cap-1 {
+        left: 6vw;
+        bottom: 12vh;
+        opacity: var(--c1);
+        transform: translateY(calc(24px * (1 - var(--c1))));
+      }
+      .cap-2 {
+        right: 6vw;
+        top: 18vh;
+        opacity: var(--c2);
+        transform: translateY(calc(24px * (1 - var(--c2))));
+      }
+
+      /* z8 — chrome */
+      .chrome {
+        position: absolute;
+        z-index: 8;
+        inset: 0 0 auto 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 26px 4vw;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .26em;
+        text-transform: uppercase;
+      }
+      .brand { display: flex; align-items: baseline; gap: 12px; color: var(--paper); text-decoration: none; }
+      .brand b { font-family: var(--display); font-size: 22px; font-weight: 500; letter-spacing: .14em; }
+      .brand span { color: var(--ochre); }
+      .beats { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+      .beats button {
+        width: 34px;
+        height: 30px;
+        border: 1px solid rgba(237, 228, 212, .35);
+        background: rgba(36, 26, 18, .25);
+        color: var(--paper);
+        font: inherit;
+        font-size: 10px;
+        letter-spacing: .1em;
+        cursor: pointer;
+        transition: background .2s, border-color .2s, color .2s;
+      }
+      .beats button:hover, .beats button:focus-visible { border-color: var(--ochre); outline: none; }
+      .beats button[aria-current="true"] { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+
+      .hint {
+        position: absolute;
+        z-index: 8;
+        left: 50%;
+        bottom: 2.4vh;
+        transform: translateX(-50%);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: .3em;
+        text-transform: uppercase;
+        color: var(--umber);
+        opacity: calc(1 - var(--b0) * 2);
+      }
+
+      /* ---------- after the hero ---------- */
+      .coda {
+        position: relative;
+        z-index: 1;
+        padding: 18vh 6vw;
+        background: var(--paper);
+        color: var(--ink);
+        text-align: center;
+      }
+      .coda h2 {
+        margin: 0 0 18px;
+        font-family: var(--display);
+        font-weight: 300;
+        font-size: clamp(40px, 6vw, 84px);
+        letter-spacing: .04em;
+      }
+      .coda p { max-width: 520px; margin: 0 auto 32px; line-height: 1.6; color: var(--umber); }
+      .coda a {
+        display: inline-block;
+        padding: 16px 30px;
+        background: var(--ink);
+        color: var(--paper);
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .26em;
+        text-transform: uppercase;
+      }
+      .coda a:hover { background: var(--cobalt); }
+
+      @media (max-width: 720px) {
+        .monastery { width: 78vw; }
+        .beats button { width: 28px; }
+        .brand span { display: none; }
+        .cap-2 { top: auto; bottom: 12vh; right: 6vw; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="track" id="track" aria-label="Ladakh: a scroll journey">
+        <div class="stage" id="stage">
+          <img class="layer bleed sky" src="https://thinkingods.com/downloads/ladakh/01-sky.webp" alt="" />
+          <img class="layer ridge" src="https://thinkingods.com/downloads/ladakh/02-ridge.webp" alt="" />
+          <img class="layer hills" src="https://thinkingods.com/downloads/ladakh/03-hills.webp" alt="" />
+          <img class="layer monastery" src="https://thinkingods.com/downloads/ladakh/04-monastery.webp" alt="A whitewashed monastery on a rocky outcrop" />
+
+          <p class="kicker">Rare Air &middot; Journey 04</p>
+          <h1 class="title">Ladakh</h1>
+          <div class="lede">
+            <p>Nine days at four thousand metres. Thin air, long light, and a road that ends where the mountains start.</p>
+            <p>June &ndash; September &middot; 8 travellers</p>
+          </div>
+
+          <div class="layer courtyard">
+            <img class="layer bleed" src="https://thinkingods.com/downloads/ladakh/08-courtyard-still.webp" alt="" />
+            <video class="layer bleed" id="courtyard-video" muted playsinline preload="metadata"
+              src="https://thinkingods.com/downloads/ladakh-courtyard.mp4"></video>
+          </div>
+          <div class="layer vignette"></div>
+
+          <img class="layer bleed gate gate-l" src="https://thinkingods.com/downloads/ladakh/05-gate-left.webp" alt="" />
+          <img class="layer bleed gate gate-r" src="https://thinkingods.com/downloads/ladakh/06-gate-right.webp" alt="" />
+
+          <aside class="caption cap-1">
+            <small>Day 03 &middot; The threshold</small>
+            <h2>Every gompa begins with a gate.</h2>
+            <p>Carved cedar, prayer flags bleached by altitude. You arrive on foot, the way pilgrims have for nine centuries.</p>
+          </aside>
+          <aside class="caption cap-2">
+            <small>Day 04 &middot; Morning puja</small>
+            <h2>Inside, the day is already old.</h2>
+            <p>Monks cross the courtyard before the sun clears the ridge. We stay two nights, long enough to stop being visitors.</p>
+          </aside>
+
+          <header class="chrome">
+            <a class="brand" href="#top"><b>Rare Air</b><span>Slow travel</span></a>
+            <ol class="beats" id="beats" aria-label="Jump to scene (keys 1–6)"></ol>
+          </header>
+          <div class="hint">Scroll</div>
+        </div>
+      </section>
+
+      <section class="coda">
+        <h2>Leave room for the altitude.</h2>
+        <p>Small groups, long acclimatisation, and drivers who were born in the valleys. Departures from Leh, June through September.</p>
+        <a href="#top">Request the itinerary</a>
+      </section>
+    </main>
+
+    <script>
+      (() => {
+        const root = document.documentElement;
+        const track = document.getElementById("track");
+        const stage = document.getElementById("stage");
+        const video = document.getElementById("courtyard-video");
+        const beatsNav = document.getElementById("beats");
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        const LERP = 0.14;
+        const TRACK = 4100;
+
+        // [name, start, end] in px of scroll into the track
+        const BEATS = [
+          ["--b0", 0, 720],
+          ["--b1", 780, 1340],
+          ["--b2", 1220, 2020],
+          ["--b3", 2350, 3200],
+          ["--b4", 2180, 2850],
+          ["--b5", 3340, 3960],
+        ];
+        // Captions: fade in over [a,b], out over [c,d]
+        const CAPTIONS = [
+          ["--c1", 1380, 1620, 1900, 2120],
+          ["--c2", 2620, 2820, 3260, 3440],
+        ];
+        // Keys 1–6: where each scene reads best
+        const STOPS = [0, 720, 1340, 2020, 2980, 3960];
+        const VIDEO_IN = 2180;
+
+        const smoothstep = (a, b, x) => {
+          const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+          return t * t * (3 - 2 * t);
+        };
+
+        let target = 0, current = 0;
+        let pTarget = { x: 0, y: 0 }, pCurrent = { x: 0, y: 0 };
+        let ticking = false;
+        let videoActive = false;
+        let activeStop = -1;
+
+        const trackTop = () => track.getBoundingClientRect().top + window.scrollY;
+        const readScroll = () => {
+          target = Math.min(TRACK, Math.max(0, window.scrollY - trackTop()));
+        };
+
+        // Build the beat buttons
+        const buttons = STOPS.map((_, i) => {
+          const li = document.createElement("li");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = String(i + 1).padStart(2, "0");
+          btn.setAttribute("aria-label", "Scene " + (i + 1));
+          btn.addEventListener("click", () => goTo(i));
+          li.appendChild(btn);
+          beatsNav.appendChild(li);
+          return btn;
+        });
+
+        function goTo(i) {
+          window.scrollTo({
+            top: trackTop() + STOPS[i],
+            behavior: reduced.matches ? "auto" : "smooth",
+          });
+        }
+
+        function syncVideo(p) {
+          const visible = window.scrollY - trackTop() < TRACK + window.innerHeight;
+          const inBeat = p >= VIDEO_IN && visible;
+          if (inBeat && !videoActive) {
+            videoActive = true;
+            try { video.currentTime = 0; } catch (e) {}
+            const play = video.play();
+            if (play && play.catch) play.catch(() => {});
+          } else if (!inBeat && videoActive) {
+            videoActive = false;
+            video.pause();
+            stage.removeAttribute("data-video");
+          }
+        }
+        video.addEventListener("playing", () => { if (videoActive) stage.setAttribute("data-video", "on"); });
+
+        function write(p) {
+          for (const [name, a, b] of BEATS) root.style.setProperty(name, smoothstep(a, b, p).toFixed(4));
+          for (const [name, a, b, c, d] of CAPTIONS) {
+            root.style.setProperty(name, (smoothstep(a, b, p) * (1 - smoothstep(c, d, p))).toFixed(4));
+          }
+          root.style.setProperty("--mx", pCurrent.x.toFixed(4));
+          root.style.setProperty("--my", pCurrent.y.toFixed(4));
+
+          // nearest stop at or before p
+          let idx = 0;
+          for (let i = 0; i < STOPS.length; i++) if (p >= STOPS[i] - 40) idx = i;
+          if (idx !== activeStop) {
+            buttons.forEach((b, i) => b.setAttribute("aria-current", i === idx ? "true" : "false"));
+            activeStop = idx;
+          }
+          syncVideo(p);
+        }
+
+        function frame() {
+          const k = reduced.matches ? 1 : LERP;
+          current += (target - current) * k;
+          pCurrent.x += (pTarget.x - pCurrent.x) * k;
+          pCurrent.y += (pTarget.y - pCurrent.y) * k;
+
+          const settled =
+            Math.abs(target - current) < 0.1 &&
+            Math.abs(pTarget.x - pCurrent.x) < 0.001 &&
+            Math.abs(pTarget.y - pCurrent.y) < 0.001;
+          if (settled) {
+            current = target;
+            pCurrent.x = pTarget.x;
+            pCurrent.y = pTarget.y;
+          }
+          write(current);
+          if (settled) ticking = false;
+          else requestAnimationFrame(frame);
+        }
+
+        function kick() {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(frame);
+          }
+        }
+
+        window.addEventListener("scroll", () => { readScroll(); kick(); }, { passive: true });
+        window.addEventListener("resize", () => { readScroll(); kick(); });
+
+        window.addEventListener("pointermove", (e) => {
+          if (reduced.matches || e.pointerType === "touch") return;
+          pTarget.x = (e.clientX / window.innerWidth) * 2 - 1;
+          pTarget.y = (e.clientY / window.innerHeight) * 2 - 1;
+          kick();
+        }, { passive: true });
+        document.addEventListener("pointerleave", () => { pTarget.x = 0; pTarget.y = 0; kick(); });
+
+        window.addEventListener("keydown", (e) => {
+          if (e.metaKey || e.ctrlKey || e.altKey) return;
+          if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "")) return;
+          const n = parseInt(e.key, 10);
+          if (n >= 1 && n <= STOPS.length) {
+            e.preventDefault();
+            goTo(n - 1);
+          }
+        });
+
+        reduced.addEventListener?.("change", () => {
+          if (reduced.matches) { pTarget.x = 0; pTarget.y = 0; }
+          kick();
+        });
+
+        readScroll();
+        current = target;
+        write(current);
+      })();
+    </script>
+  </body>
+</html>
