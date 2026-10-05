@@ -190,56 +190,39 @@ button {
   height: 100%;
 }
 
-/* z0 — sky */
-.plate-sky {
+/* z0 — the far peaks: pull back only slightly, then push in */
+.plate-peaks {
   z-index: 0;
-  transform: translate(calc(var(--mx) * -6px), calc(var(--my) * -4px)) scale(1.05);
+  object-fit: cover;
+  object-position: 50% 24%;
+  transform-origin: 50% 45%;
+  transform:
+    translate(calc(var(--mx) * -6px), calc(var(--my) * -4px))
+    scale(calc(1.08 - 0.04 * var(--b0) + 0.28 * var(--b2)));
+  filter: blur(calc(2px * var(--b2))) brightness(calc(1 - 0.25 * var(--b2)));
 }
 
-/* z1 — Ngong ridge, far away: moves least */
-.plate-ridge {
+/* z1 — scrim: keeps paper type readable against a bright sky */
+.plate-scrim {
   z-index: 1;
-  left: 50%;
-  bottom: 34%;
-  width: 110%;
-  aspect-ratio: 1600 / 400;
-  opacity: calc(0.58 + 0.2 * var(--b0) - 0.4 * var(--b2));
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 50%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 50%, transparent 100%);
-  transform-origin: 50% 100%;
-  transform:
-    translateX(calc(-50% + var(--mx) * -10px))
-    translateY(calc(48px * var(--b0) + var(--my) * -3px))
-    scale(calc(1 - 0.06 * var(--b0) + 0.22 * var(--b2)));
-  filter: blur(calc(2px * var(--b2)));
+  background:
+    linear-gradient(to bottom, rgba(13, 20, 32, 0.66) 0%, rgba(13, 20, 32, 0.24) 36%, rgba(13, 20, 32, 0) 55%),
+    linear-gradient(to top, rgba(20, 13, 8, 0.55) 0%, rgba(20, 13, 8, 0) 30%);
 }
 
-/* z2 — savannah hills, one uniform scale anchored to the bottom edge */
-.plate-hills {
+/* z2 — the treeline: same photo, masked to the forest, dollies out faster from the bottom edge */
+.plate-treeline {
   z-index: 2;
-  left: 50%;
-  bottom: 0;
-  width: 161%;
-  aspect-ratio: 2400 / 700;
+  object-fit: cover;
+  object-position: 50% 24%;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 54%, #000 74%);
+  mask-image: linear-gradient(to bottom, transparent 54%, #000 74%);
   transform-origin: 50% 100%;
   transform:
-    translateX(calc(-50% + var(--mx) * -18px))
-    scale(calc(1 - 0.24 * var(--b0) + 0.55 * var(--b2)));
-  filter: blur(calc(3px * var(--b2)));
-}
-
-/* z3 — skyline, flush to the bottom edge */
-.plate-city {
-  z-index: 3;
-  left: 50%;
-  bottom: 0;
-  width: min(62vw, 980px);
-  aspect-ratio: 1000 / 520;
-  transform-origin: 50% 100%;
-  transform:
-    translateX(calc(-50% + var(--mx) * -28px))
-    scale(calc(1 + 0.12 * var(--b0) + 0.48 * var(--b2)));
-  opacity: calc(1 - var(--b2));
+    translateX(calc(var(--mx) * -22px))
+    scale(calc(1.24 - 0.16 * var(--b0) + 0.6 * var(--b2)));
+  filter: blur(calc(3px * var(--b2))) brightness(calc(0.82 - 0.2 * var(--b2)));
+  opacity: calc(1 - 0.6 * var(--b2));
 }
 
 /* z4 — type */
@@ -437,15 +420,6 @@ button {
 }
 
 @media (max-width: 720px) {
-  .plate-ridge {
-    width: 230%;
-  }
-  .plate-hills {
-    width: 330%;
-  }
-  .plate-city {
-    width: 150vw;
-  }
   .hero-lede {
     padding: 36px 28px;
   }

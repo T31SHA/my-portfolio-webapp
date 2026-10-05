@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CityPlate, DataPlate, HillsPlate, RidgePlate, SkyPlate } from '@/components/hero/Plates'
+import { DataPlate } from '@/components/hero/Plates'
 
 const TRACK = 3500
 const LERP = 0.14
@@ -158,10 +158,23 @@ export function Hero() {
   return (
     <section id="home" ref={trackRef} className="hero-track" aria-label="Introduction">
       <div ref={stageRef} className="hero-stage">
-        <SkyPlate className="plate plate-bleed plate-sky" />
-        <RidgePlate className="plate plate-ridge" />
-        <HillsPlate className="plate plate-hills" />
-        <CityPlate className="plate plate-city" />
+        {/* One photograph, used twice: the far peaks, and a masked copy of the treeline that moves faster */}
+        <img
+          className="plate plate-bleed plate-peaks"
+          src="/assets/hero-peaks.webp"
+          srcSet="/assets/hero-peaks-1100.webp 1100w, /assets/hero-peaks.webp 2000w"
+          sizes="100vw"
+          alt="Sunlit snow-streaked peaks above dark forested hills"
+          fetchPriority="high"
+        />
+        <div className="plate plate-bleed plate-scrim" />
+        <img
+          className="plate plate-bleed plate-treeline"
+          src="/assets/hero-peaks.webp"
+          srcSet="/assets/hero-peaks-1100.webp 1100w, /assets/hero-peaks.webp 2000w"
+          sizes="100vw"
+          alt=""
+        />
 
         <p className="hero-kicker eyebrow">Data Scientist &middot; Nairobi, Kenya</p>
         <h1 className="hero-title">

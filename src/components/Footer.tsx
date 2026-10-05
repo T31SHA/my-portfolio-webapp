@@ -18,7 +18,12 @@ export function Footer() {
             </a>
           ))}
         </div>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-paper/50">© {new Date().getFullYear()} &middot; Nairobi</p>
+        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.24em] text-paper/50 sm:text-right">
+          © {new Date().getFullYear()} &middot; Nairobi
+          <a href="https://unsplash.com/@reedgeiger" target="_blank" rel="noreferrer" className="focus-ring mt-1.5 block normal-case tracking-[0.08em] hover:text-ochre">
+            Opening photo by Reed Geiger on Unsplash
+          </a>
+        </p>
       </div>
     </footer>
   )
