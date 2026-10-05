@@ -178,11 +178,11 @@ export function Hero() {
 
         <p className="hero-kicker eyebrow">Data Scientist &middot; Nairobi, Kenya</p>
         <h1 className="hero-title">
-          Sharahbil<span className="sr-only"> Abdi, data scientist in Nairobi</span>
+          Sharahbill<span className="sr-only"> Abdi, data scientist in Nairobi</span>
         </h1>
         <div className="hero-lede">
           <p className="text-[clamp(15px,1.35vw,19px)] leading-[1.55]">
-            Abdi. Machine learning, forecasting and applied analytics: turning raw data into clear decisions, grounded in simplicity, scalability and impact.
+            Machine learning, forecasting and applied analytics: turning raw data into clear decisions, grounded in simplicity, scalability and impact.
           </p>
           <p className="mt-3.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-umber">
             Open to collaborations &middot; 1.2921&deg; S, 36.8219&deg; E
@@ -198,13 +198,13 @@ export function Hero() {
           <span className="absolute -top-3 left-5 -rotate-3 bg-ochre px-3 py-1 text-[10px] font-semibold tracking-[0.24em] text-ink">T31SHA</span>
           <img
             src="/assets/sharahbil-abdi.jpg"
-            alt="Sharahbil Abdi speaking at a podium in a navy academic gown and orange stole"
+            alt="Sharahbill Abdi speaking at a podium in a navy academic gown and orange stole"
             width={640}
             height={640}
             className="h-full w-full object-cover"
           />
           <figcaption className="absolute inset-x-3 bottom-3.5 hidden sm:flex justify-between text-[10px] font-semibold uppercase tracking-[0.22em] text-umber">
-            <span>Sharahbil Abdi</span>
+            <span>Sharahbill Abdi</span>
             <span>Nairobi</span>
           </figcaption>
         </figure>

@@ -25,7 +25,7 @@ export function Preloader() {
               animate={{ opacity: 1, letterSpacing: '0.3em' }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              Sharahbil Abdi
+              Sharahbill Abdi
             </motion.p>
             <motion.span
               className="mt-5 h-px w-40 origin-left bg-ochre"
