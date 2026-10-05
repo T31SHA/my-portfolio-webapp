@@ -7,9 +7,6 @@ import { Hero } from '@/components/Hero'
 import { Nav } from '@/components/Nav'
 import { Preloader } from '@/components/Preloader'
 import { Showcase } from '@/components/Showcase'
-import { ThemeSwitcher } from '@/components/ThemeSwitcher'
-import { useBackgroundTheme } from '@/hooks/use-background-theme'
-import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/')({
   head: () => ({
@@ -26,25 +23,18 @@ export const Route = createFileRoute('/')({
 })
 
 function IndexPage() {
-  const { theme, setTheme } = useBackgroundTheme()
-
   return (
-    <div className={cn('theme-page relative isolate min-h-screen overflow-x-clip bg-background text-foreground', theme === 'blue' && 'theme-blue', theme === 'midnight' && 'theme-midnight')}>
-      <div className="ambient-glow" aria-hidden="true" />
-      <div className="grid-backdrop" aria-hidden="true" />
+    <div className="relative min-h-screen overflow-x-clip bg-paper text-ink">
       <Preloader />
-      <div className="relative z-10">
-        <Nav />
-        <main>
-          <Hero />
-          <About />
-          <Showcase />
-          <Contact />
-        </main>
-        <Footer />
-        <Toaster position="bottom-left" toastOptions={{ classNames: { toast: 'border-border bg-surface text-foreground', title: 'text-foreground', description: 'text-muted-foreground' } }} />
-        <ThemeSwitcher theme={theme} setTheme={setTheme} />
-      </div>
+      <Nav />
+      <main>
+        <Hero />
+        <About />
+        <Showcase />
+        <Contact />
+      </main>
+      <Footer />
+      <Toaster position="bottom-left" toastOptions={{ classNames: { toast: '!rounded-none !border-ink/15 !bg-paper !text-ink', title: '!text-ink', description: '!text-umber' } }} />
     </div>
   )
 }

@@ -1,114 +1,247 @@
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
-import { Download } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { CityPlate, DataPlate, HillsPlate, RidgePlate, SkyPlate } from '@/components/hero/Plates'
+
+const TRACK = 3500
+const LERP = 0.14
+
+// [variable, start, end] in px of scroll into the track
+const BEATS = [
+  ['--b0', 0, 580], // the world settles
+  ['--b1', 630, 1080], // the type leaves
+  ['--b2', 990, 1640], // the diptych rises, the camera pushes
+  ['--b3', 1900, 2600], // the diptych parts
+  ['--b4', 1770, 2310], // the data plate settles in
+  ['--b5', 2900, 3400], // the data plate defocuses
+] as const
+
+// Captions: fade in over [a, b], out over [c, d]
+const CAPTIONS = [
+  ['--c1', 2540, 2680, 2820, 2940],
+  ['--c2', 2600, 2740, 2840, 2960],
+  ['--c3', 2960, 3320, 1e9, 1e9 + 1], // holds to the end
+] as const
+
+// Keys 1–6: where each scene reads best
+const STOPS = [0, 580, 1080, 1640, 2720, 3400]
+
+const smoothstep = (a: number, b: number, x: number) => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)))
+  return t * t * (3 - 2 * t)
+}
 
 const tags = ['Python', 'TensorFlow', 'PyTorch', 'Pandas', 'scikit-learn']
 
 export function Hero() {
-  const reduceMotion = useReducedMotion()
-  const pointerX = useMotionValue(0)
-  const targetRotation = useTransform(pointerX, [-1, 1], [-7, -1])
-  const rotation = useSpring(targetRotation, { stiffness: 90, damping: 14 })
+  const trackRef = useRef<HTMLElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const [activeStop, setActiveStop] = useState(0)
 
   useEffect(() => {
-    const onPointerMove = (event: MouseEvent) => {
-      const normalized = (event.clientX / window.innerWidth) * 2 - 1
-      pointerX.set(Math.max(-1, Math.min(1, normalized)))
+    const track = trackRef.current
+    const stage = stageRef.current
+    if (!track || !stage) return
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let target = 0
+    let current = 0
+    const pTarget = { x: 0, y: 0 }
+    const pCurrent = { x: 0, y: 0 }
+    let ticking = false
+    let lastStop = -1
+    let raf = 0
+
+    const trackTop = () => track.getBoundingClientRect().top + window.scrollY
+    const readScroll = () => {
+      target = Math.min(TRACK, Math.max(0, window.scrollY - trackTop()))
     }
-    window.addEventListener('mousemove', onPointerMove)
-    return () => window.removeEventListener('mousemove', onPointerMove)
-  }, [pointerX])
+
+    const write = (p: number) => {
+      for (const [name, a, b] of BEATS) stage.style.setProperty(name, smoothstep(a, b, p).toFixed(4))
+      for (const [name, a, b, c, d] of CAPTIONS) {
+        stage.style.setProperty(name, (smoothstep(a, b, p) * (1 - smoothstep(c, d, p))).toFixed(4))
+      }
+      stage.style.setProperty('--mx', pCurrent.x.toFixed(4))
+      stage.style.setProperty('--my', pCurrent.y.toFixed(4))
+
+      let idx = 0
+      for (let i = 0; i < STOPS.length; i++) if (p >= STOPS[i] - 40) idx = i
+      if (idx !== lastStop) {
+        lastStop = idx
+        setActiveStop(idx)
+      }
+    }
+
+    const frame = () => {
+      const k = reduced.matches ? 1 : LERP
+      current += (target - current) * k
+      pCurrent.x += (pTarget.x - pCurrent.x) * k
+      pCurrent.y += (pTarget.y - pCurrent.y) * k
+
+      const settled =
+        Math.abs(target - current) < 0.1 &&
+        Math.abs(pTarget.x - pCurrent.x) < 0.001 &&
+        Math.abs(pTarget.y - pCurrent.y) < 0.001
+      if (settled) {
+        current = target
+        pCurrent.x = pTarget.x
+        pCurrent.y = pTarget.y
+      }
+      write(current)
+      if (settled) ticking = false
+      else raf = requestAnimationFrame(frame)
+    }
+
+    const kick = () => {
+      if (!ticking) {
+        ticking = true
+        raf = requestAnimationFrame(frame)
+      }
+    }
+
+    const onScroll = () => {
+      readScroll()
+      kick()
+    }
+    const onPointer = (e: PointerEvent) => {
+      if (reduced.matches || e.pointerType === 'touch') return
+      pTarget.x = (e.clientX / window.innerWidth) * 2 - 1
+      pTarget.y = (e.clientY / window.innerHeight) * 2 - 1
+      kick()
+    }
+    const onLeave = () => {
+      pTarget.x = 0
+      pTarget.y = 0
+      kick()
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? '')) return
+      // Only while the hero is on screen, so the keys stay free elsewhere on the page.
+      if (window.scrollY - trackTop() > TRACK + window.innerHeight * 0.5) return
+      const n = Number.parseInt(e.key, 10)
+      if (n >= 1 && n <= STOPS.length) {
+        e.preventDefault()
+        goTo(n - 1)
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    window.addEventListener('pointermove', onPointer, { passive: true })
+    document.addEventListener('pointerleave', onLeave)
+    window.addEventListener('keydown', onKey)
+
+    readScroll()
+    current = target
+    write(current)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      window.removeEventListener('pointermove', onPointer)
+      document.removeEventListener('pointerleave', onLeave)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [])
+
+  const goTo = (i: number) => {
+    const track = trackRef.current
+    if (!track) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({
+      top: track.getBoundingClientRect().top + window.scrollY + STOPS[i],
+      behavior: reduced ? 'auto' : 'smooth',
+    })
+  }
 
   return (
-    <section id="home" className="mx-auto max-w-6xl px-5 pb-24 pt-32 md:pt-40">
-      <div className="grid items-start gap-16 md:grid-cols-[1.1fr_0.9fr]">
-        <motion.div
-          className="max-w-2xl"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className="eyebrow">Data Scientist · Nairobi, Kenya</p>
-          <h1 className="mt-5 text-[clamp(3.5rem,12vw,7rem)] font-extrabold leading-[0.92] tracking-[-0.065em]">
-            Data
-            <br />
-            <span className="text-muted-foreground">Scientist</span>
-          </h1>
-          <p className="mt-8 max-w-md text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-            I am a data-focused technologist with a strong interest in data science, machine learning, and building systems that solve real-world problems. I focus on transforming raw data into clear, actionable insights that support effective decision-making, grounded in simplicity, scalability, and impact.
+    <section id="home" ref={trackRef} className="hero-track" aria-label="Introduction">
+      <div ref={stageRef} className="hero-stage">
+        <SkyPlate className="plate plate-bleed plate-sky" />
+        <RidgePlate className="plate plate-ridge" />
+        <HillsPlate className="plate plate-hills" />
+        <CityPlate className="plate plate-city" />
+
+        <p className="hero-kicker eyebrow">Data Scientist &middot; Nairobi, Kenya</p>
+        <h1 className="hero-title">
+          Sharahbil<span className="sr-only"> Abdi, data scientist in Nairobi</span>
+        </h1>
+        <div className="hero-lede">
+          <p className="text-[clamp(15px,1.35vw,19px)] leading-[1.55]">
+            Abdi. Machine learning, forecasting and applied analytics: turning raw data into clear decisions, grounded in simplicity, scalability and impact.
           </p>
-          <div className="mt-7 flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="glass-surface rounded-full px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted-foreground"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a href="/assets/sharahbil-abdi-cv.pdf" download className="btn-pill focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
-              <Download className="mr-2 h-4 w-4" strokeWidth={1.5} />
-              Download CV
-            </a>
-            <a
-              href="#contact"
-              className="focus-ring text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground"
-            >
-              Get in touch <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </motion.div>
-
-        <div className="mx-auto w-full max-w-[300px] pt-14 md:mx-0 md:justify-self-end">
-          <div className="relative flex flex-col items-center">
-            <div className="pointer-events-none absolute -inset-x-10 -inset-y-10 overflow-hidden" aria-hidden="true">
-              {[
-                { glyph: 'D', left: '8%', top: '18%', delay: 0, duration: 6.4 },
-                { glyph: 'A', left: '82%', top: '12%', delay: 1.1, duration: 7.2 },
-                { glyph: 'T', left: '12%', top: '72%', delay: 0.6, duration: 5.8 },
-                { glyph: 'A·I', left: '84%', top: '66%', delay: 1.8, duration: 6.8 },
-                { glyph: 'ML', left: '48%', top: '4%', delay: 2.3, duration: 7.6 },
-              ].map(({ glyph, left, top, delay, duration }) => (
-                <motion.span
-                  key={glyph}
-                  className="absolute font-mono text-xs tracking-[0.18em] text-foreground/30"
-                  style={{ left, top }}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={reduceMotion ? { opacity: 0.22 } : { opacity: [0, 0.42, 0.18, 0], y: [8, -4, -16, -24] }}
-                  transition={{ duration, delay, repeat: reduceMotion ? 0 : Infinity, ease: 'easeInOut' }}
-                >
-                  {glyph}
-                </motion.span>
-              ))}
-            </div>
-            <div className="h-16 w-px bg-hairline" aria-hidden="true" />
-            <motion.div className="relative z-10 origin-top" style={{ rotate: rotation }}>
-              <div className="polaroid-shadow glass-surface relative rounded-2xl p-3 pb-10">
-                <span className="glass-surface absolute -top-3 left-4 -rotate-6 rounded-md px-3 py-1 font-mono text-[0.65rem] tracking-[0.18em] text-foreground shadow-sm">
-                  T31SHA
-                </span>
-                <img
-                  src="/assets/sharahbil-abdi.jpg"
-                  alt="Sharahbil Abdi speaking at a podium in a navy academic gown and orange stole"
-                  width={768}
-                  height={960}
-                  className="aspect-[4/5] w-full rounded-lg object-cover"
-                />
-              </div>
-            </motion.div>
-          </div>
+          <p className="mt-3.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-umber">
+            Open to collaborations &middot; 1.2921&deg; S, 36.8219&deg; E
+          </p>
         </div>
-      </div>
 
-      <div className="mt-20 hidden items-center gap-4 md:flex" aria-hidden="true">
-        <span className="font-mono text-[0.625rem] uppercase tracking-[0.3em] text-muted-foreground">Scroll</span>
-        <motion.span
-          className="h-px w-16 origin-left bg-hairline"
-          animate={{ scaleX: [0.3, 1, 0.3] }}
-          transition={{ duration: 2.2, ease: 'easeInOut', repeat: Infinity }}
-        />
+        <div className="plate plate-bleed plate-data">
+          <DataPlate className="h-full w-full" />
+        </div>
+        <div className="plate plate-bleed plate-vignette" />
+
+        <figure className="leaf leaf-l m-0 bg-paper p-3 pb-11 shadow-[0_30px_60px_-28px_rgba(0,0,0,0.7)]">
+          <span className="absolute -top-3 left-5 -rotate-3 bg-ochre px-3 py-1 text-[10px] font-semibold tracking-[0.24em] text-ink">T31SHA</span>
+          <img
+            src="/assets/sharahbil-abdi.jpg"
+            alt="Sharahbil Abdi speaking at a podium in a navy academic gown and orange stole"
+            width={640}
+            height={640}
+            className="h-full w-full object-cover"
+          />
+          <figcaption className="absolute inset-x-3 bottom-3.5 hidden sm:flex justify-between text-[10px] font-semibold uppercase tracking-[0.22em] text-umber">
+            <span>Sharahbil Abdi</span>
+            <span>Nairobi</span>
+          </figcaption>
+        </figure>
+
+        <div className="leaf leaf-r flex flex-col justify-center bg-paper p-[clamp(20px,3vw,44px)] text-ink shadow-[0_30px_60px_-28px_rgba(0,0,0,0.7)]">
+          <p className="eyebrow !text-cobalt">01 &middot; Who I am</p>
+          <h2 className="display mt-4 text-[clamp(28px,3.4vw,50px)]">Raw data, read closely.</h2>
+          <p className="mt-5 text-[clamp(13px,1vw,15px)] leading-[1.65] text-umber">
+            I am a data-focused technologist with a strong interest in data science, machine learning, and building systems that solve real-world problems. I turn raw data into clear, actionable insight.
+          </p>
+          <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.24em] text-ochre">{tags.join(' · ')}</p>
+        </div>
+
+        <aside className="hero-caption cap-1">
+          <small className="eyebrow mb-2.5 block !text-cobalt">Based in &middot; Nairobi</small>
+          <h2 className="display mb-2 text-[30px] font-normal leading-[1.05]">Where the data meets the ground.</h2>
+          <p className="text-sm leading-[1.55] text-umber">Floods, drought, markets, crops: problems I can stand next to, modelled with care.</p>
+        </aside>
+        <aside className="hero-caption cap-2">
+          <small className="eyebrow mb-2.5 block !text-cobalt">The practice</small>
+          <h2 className="display mb-2 text-[30px] font-normal leading-[1.05]">Observe, model, forecast.</h2>
+          <p className="text-sm leading-[1.55] text-umber">Time-series, classification and decision support, built to be read by the people who use it.</p>
+        </aside>
+        <div className="cap-3">
+          <p className="eyebrow">In one line</p>
+          <p className="display mt-5 text-[clamp(38px,6.4vw,104px)] text-paper">
+            &ldquo;Turning raw data into
+            <br />
+            decisions that matter.&rdquo;
+          </p>
+        </div>
+
+        <div className="hero-chrome">
+          <span className="hero-hint eyebrow !text-paper">Scroll</span>
+          <ol className="m-0 flex list-none gap-1.5 p-0" aria-label="Jump to scene (keys 1–6)">
+            {STOPS.map((_, i) => (
+              <li key={i}>
+                <button
+                  type="button"
+                  className="beat-btn"
+                  aria-label={`Scene ${i + 1}`}
+                  aria-current={activeStop === i}
+                  onClick={() => goTo(i)}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </button>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   )

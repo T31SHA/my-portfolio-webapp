@@ -1,5 +1,5 @@
-import { AtSign, MessageCircle, Send, UserRound } from 'lucide-react'
-import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'react'
+import { Send } from 'lucide-react'
+import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { Reveal } from '@/components/Reveal'
 
@@ -17,10 +17,6 @@ const initialComments: CommentEntry[] = [
     time: '2 days ago',
   },
 ]
-
-function FieldIcon({ children }: { children: ReactNode }) {
-  return <span className="pointer-events-none absolute left-3 top-3 text-muted-foreground">{children}</span>
-}
 
 export function Contact() {
   const [comments, setComments] = useState<CommentEntry[]>(initialComments)
@@ -60,87 +56,73 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="mx-auto max-w-6xl px-5 py-24">
-      <Reveal className="text-center">
-        <div className="relative inline-block">
-          <span className="absolute left-1 top-1 text-4xl font-extrabold tracking-[-0.04em] text-foreground/15 sm:text-5xl" aria-hidden="true">Contact Me</span>
-          <h2 className="relative text-4xl font-extrabold tracking-[-0.04em] sm:text-5xl">Contact Me</h2>
-        </div>
-        <p className="mx-auto mt-5 max-w-xl text-muted-foreground">Got a project, a dataset, or a question? Leave a message or sign the guestbook.</p>
-      </Reveal>
-
-      <div className="mt-12 grid gap-5 md:grid-cols-2">
-        <Reveal delay={0.08}>
-          <div className="card-surface h-full p-6 sm:p-7">
-            <h3 className="text-xl font-semibold tracking-tight">Get in Touch</h3>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">Direct line to my inbox for work and collaborations.</p>
-            <form className="mt-7 space-y-4" onSubmit={submitMessage}>
-              <label className="relative block">
-                <span className="sr-only">Name</span>
-                <FieldIcon><UserRound className="h-4 w-4" strokeWidth={1.5} /></FieldIcon>
-                <input required name="name" type="text" placeholder="Name" className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
-              </label>
-              <label className="relative block">
-                <span className="sr-only">Email</span>
-                <FieldIcon><AtSign className="h-4 w-4" strokeWidth={1.5} /></FieldIcon>
-                <input required name="email" type="email" placeholder="Email" className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
-              </label>
-              <label className="relative block">
-                <span className="sr-only">Message</span>
-                <FieldIcon><MessageCircle className="h-4 w-4" strokeWidth={1.5} /></FieldIcon>
-                <textarea required name="message" placeholder="Message" rows={5} className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full resize-none rounded-xl py-3 pl-10 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
-              </label>
-              <button type="submit" className="btn-pill focus-visible:ring-2 focus-visible:ring-ring w-full focus-visible:outline-none">
-                <Send className="mr-2 h-4 w-4" strokeWidth={1.5} />
-                Send Message
-              </button>
-            </form>
-          </div>
+    <section id="contact" className="bg-ink px-[6vw] py-[16vh] text-paper">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <p className="eyebrow">04 &middot; Contact</p>
+          <h2 className="display mt-6 text-[clamp(44px,6.2vw,92px)]">
+            Got a dataset,
+            <br />
+            <em className="text-ochre">or a question?</em>
+          </h2>
+          <p className="mt-6 max-w-xl text-paper/70">Leave a message for work and collaborations, or sign the guestbook.</p>
         </Reveal>
 
-        <Reveal delay={0.16}>
-          <div className="card-surface h-full p-6 sm:p-7">
-            <h3 className="text-xl font-semibold tracking-tight">Comments</h3>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">Public guestbook — new comments appear as pending until reviewed.</p>
-            <form className="mt-7 space-y-4" onSubmit={submitComment}>
+        <div className="mt-[10vh] grid gap-16 md:grid-cols-2 md:gap-20">
+          <Reveal delay={0.08}>
+            <h3 className="display text-[34px] font-normal">Get in touch</h3>
+            <p className="mt-2 text-sm leading-6 text-paper/60">Direct line to my inbox.</p>
+            <form className="mt-8 space-y-3" onSubmit={submitMessage}>
               <label className="block">
                 <span className="sr-only">Name</span>
-                <input value={guestName} onChange={(event) => { setGuestName(event.target.value); guardGuestbook() }} type="text" placeholder="Name (optional)" className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full rounded-xl px-3 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
+                <input required name="name" type="text" placeholder="Name" className="field-line" />
+              </label>
+              <label className="block">
+                <span className="sr-only">Email</span>
+                <input required name="email" type="email" placeholder="Email" className="field-line" />
+              </label>
+              <label className="block">
+                <span className="sr-only">Message</span>
+                <textarea required name="message" placeholder="Message" rows={4} className="field-line resize-none" />
+              </label>
+              <button type="submit" className="btn-ink focus-ring mt-6 !bg-paper !text-ink hover:!bg-ochre">
+                <Send className="h-4 w-4" strokeWidth={1.5} />
+                Send message
+              </button>
+            </form>
+          </Reveal>
+
+          <Reveal delay={0.16}>
+            <h3 className="display text-[34px] font-normal">Guestbook</h3>
+            <p className="mt-2 text-sm leading-6 text-paper/60">New comments appear as pending until reviewed.</p>
+            <form className="mt-8 space-y-3" onSubmit={submitComment}>
+              <label className="block">
+                <span className="sr-only">Name</span>
+                <input value={guestName} onChange={(event) => { setGuestName(event.target.value); guardGuestbook() }} type="text" placeholder="Name (optional)" className="field-line" />
               </label>
               <label className="block">
                 <span className="sr-only">Comment</span>
-                <textarea required value={guestComment} onChange={(event) => { setGuestComment(event.target.value); guardGuestbook() }} placeholder="Leave a comment" rows={4} className="glass-field focus-visible:ring-2 focus-visible:ring-ring w-full resize-none rounded-xl px-3 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none" />
+                <textarea required value={guestComment} onChange={(event) => { setGuestComment(event.target.value); guardGuestbook() }} placeholder="Leave a comment" rows={3} className="field-line resize-none" />
               </label>
-              <label className="sr-only">
-                Attach image (optional)
-                <input type="file" accept="image/*" />
-              </label>
-              <button type="submit" disabled={cooldown} className="btn-ghost focus-visible:ring-2 focus-visible:ring-ring w-full disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none">
-                {cooldown ? 'Please wait…' : 'Post Comment'}
+              <button type="submit" disabled={cooldown} className="btn-line focus-ring mt-6 disabled:cursor-not-allowed disabled:opacity-50">
+                {cooldown ? 'Please wait…' : 'Post comment'}
               </button>
             </form>
 
-            <div className="divider-dashed mt-8 pt-5">
-              <div className="space-y-5">
-                {comments.map((comment, index) => (
-                  <article key={`${comment.time}-${index}`} className="flex gap-3">
-                    <div className="glass-surface flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-mono text-xs text-muted-foreground" aria-hidden="true">
-                      {comment.name.slice(0, 2).toUpperCase()}
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <p className="text-sm font-semibold">{comment.name}</p>
-                        <span className="text-xs text-muted-foreground">{comment.time}</span>
-                        {comment.pending ? <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[0.55rem] uppercase tracking-[0.1em] text-muted-foreground">Pending</span> : null}
-                      </div>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">{comment.text}</p>
-                    </div>
-                  </article>
-                ))}
-              </div>
+            <div className="mt-10 space-y-6 border-t border-paper/15 pt-6">
+              {comments.map((comment, index) => (
+                <article key={`${comment.time}-${index}`} className="border-l-2 border-ochre pl-4">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <p className="text-sm font-semibold">{comment.name}</p>
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-paper/50">{comment.time}</span>
+                    {comment.pending ? <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-ochre">Pending</span> : null}
+                  </div>
+                  <p className="mt-1.5 text-sm leading-6 text-paper/70">{comment.text}</p>
+                </article>
+              ))}
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   )

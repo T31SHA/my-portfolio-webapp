@@ -1,12 +1,11 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { BarChart3, BrainCircuit, Terminal } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export function Preloader() {
   const [visible, setVisible] = useState(true)
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setVisible(false), 1200)
+    const timer = window.setTimeout(() => setVisible(false), 1100)
     return () => window.clearTimeout(timer)
   }, [])
 
@@ -14,40 +13,26 @@ export function Preloader() {
     <AnimatePresence>
       {visible ? (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-background"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink text-paper"
           aria-hidden="true"
-          exit={{ opacity: 0, scale: 1.04 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="flex flex-col items-center text-center">
-            <div className="mb-8 flex items-center gap-5 text-muted-foreground">
-              {[Terminal, BarChart3, BrainCircuit].map((Icon, index) => (
-                <motion.div
-                  key={Icon.displayName ?? index}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index, duration: 0.5 }}
-                >
-                  <Icon className="h-5 w-5" strokeWidth={1.5} />
-                </motion.div>
-              ))}
-            </div>
             <motion.p
-              className="text-2xl font-bold tracking-tight sm:text-3xl"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.28, duration: 0.55 }}
+              className="font-display text-[clamp(28px,4vw,44px)] font-light uppercase tracking-[0.3em]"
+              initial={{ opacity: 0, letterSpacing: '0.18em' }}
+              animate={{ opacity: 1, letterSpacing: '0.3em' }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              Welcome to my
+              Sharahbil Abdi
             </motion.p>
-            <motion.p
-              className="mt-1 text-lg text-muted-foreground sm:text-xl"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.42, duration: 0.55 }}
-            >
-              Portfolio Website
-            </motion.p>
+            <motion.span
+              className="mt-5 h-px w-40 origin-left bg-ochre"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.9, ease: 'easeInOut' }}
+            />
           </div>
         </motion.div>
       ) : null}

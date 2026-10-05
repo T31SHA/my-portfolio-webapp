@@ -1,22 +1,24 @@
-import { motion } from 'motion/react'
+import { Download } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 const links = [
   { label: 'Home', href: '#home', id: 'home' },
   { label: 'About', href: '#about', id: 'about' },
-  { label: 'Portfolio', href: '#portfolio', id: 'portfolio' },
+  { label: 'Work', href: '#portfolio', id: 'portfolio' },
   { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false)
+  const [overHero, setOverHero] = useState(true)
   const [activeSection, setActiveSection] = useState('home')
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const hero = document.getElementById('home')
+    const onScroll = () => setOverHero(!hero || hero.getBoundingClientRect().bottom > 72)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -25,9 +27,8 @@ export function Nav() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
         if (visible) setActiveSection(visible.target.id)
       },
-      { rootMargin: '-45% 0px -50% 0px', threshold: [0.1, 0.25, 0.5] },
+      { rootMargin: '-45% 0px -50% 0px', threshold: [0, 0.1, 0.5] },
     )
-
     links.forEach(({ id }) => {
       const section = document.getElementById(id)
       if (section) observer.observe(section)
@@ -35,44 +36,48 @@ export function Nav() {
 
     return () => {
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
       observer.disconnect()
     }
   }, [])
 
   return (
-    <motion.nav
+    <nav
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
-        scrolled && 'border-b border-foreground/10 bg-background/45 shadow-lg shadow-black/10 backdrop-blur-2xl',
+        overHero ? 'text-paper' : 'border-b border-ink/10 bg-paper/90 text-ink backdrop-blur-md',
       )}
       aria-label="Primary navigation"
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-1 px-5 py-4 sm:gap-3 sm:py-5">
-        <a
-          href="#home"
-          className="focus-ring shrink-0 font-mono text-xs tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
-        >
-          sharahbil.dev
+      <div className="flex items-center justify-between gap-4 px-[4vw] py-5 sm:py-6">
+        <a href="#home" className="focus-ring flex shrink-0 items-baseline gap-3">
+          <b className="font-display text-[22px] font-medium uppercase tracking-[0.14em]">S. Abdi</b>
+          <span className="eyebrow hidden md:inline">Data Science</span>
         </a>
-        <div className="glass-surface flex min-w-0 items-center gap-0 rounded-full p-1 sm:gap-0.5">
-          {links.map((link) => {
-            const active = activeSection === link.id
-            return (
-              <a
-                key={link.id}
-                href={link.href}
-                aria-current={active ? 'page' : undefined}
-                className={cn(
-                  'focus-ring whitespace-nowrap rounded-full px-1.5 py-1.5 text-[0.58rem] text-muted-foreground transition-colors hover:text-foreground sm:px-3 sm:text-sm',
-                  active && 'bg-foreground/10 text-foreground shadow-sm shadow-black/10',
-                )}
-              >
-                {link.label}
-              </a>
-            )
-          })}
+        <div className="flex items-center gap-[clamp(10px,2.4vw,34px)]">
+          {links.map((link) => (
+            <a
+              key={link.id}
+              href={link.href}
+              aria-current={activeSection === link.id ? 'page' : undefined}
+              className={cn(
+                'focus-ring border-b border-transparent pb-1 text-[10px] font-semibold uppercase tracking-[0.24em] opacity-75 transition-opacity hover:opacity-100 sm:text-[11px]',
+                activeSection === link.id && 'border-ochre opacity-100',
+              )}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="/assets/sharahbil-abdi-cv.pdf"
+            download
+            className="focus-ring hidden items-center gap-2 border border-current px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] transition-colors hover:bg-ochre hover:text-ink sm:inline-flex"
+          >
+            <Download className="h-3.5 w-3.5" strokeWidth={1.5} />
+            CV
+          </a>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   )
 }

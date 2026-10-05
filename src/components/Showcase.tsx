@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { ExternalLink, Github } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Reveal } from '@/components/Reveal'
@@ -70,50 +70,33 @@ const stack = [
 
 function ProjectsPanel() {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((project, index) => (
         <motion.article
           key={project.title}
-          className="card-surface hover-lift overflow-hidden"
+          className="group"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: index * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="flex items-center gap-1.5 border-b border-foreground/10 bg-foreground/[0.04] px-4 py-3 backdrop-blur-xl" aria-hidden="true">
-            <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-            <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-            <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-            <span className="ml-2 h-2 w-1/2 rounded-full bg-muted-foreground/20" />
-          </div>
-          <img
-            src={project.cover}
-            alt={`${project.title} project cover`}
-            width={640}
-            height={400}
-            className="aspect-[16/10] w-full object-cover grayscale"
-          />
-          <div className="p-5">
-            <div className="flex items-start justify-between gap-3">
-              <h3 className="font-semibold leading-6">{project.title}</h3>
-              <a
-                href={project.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${project.title} on GitHub`}
-                className="focus-ring shrink-0 text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <Github className="h-4 w-4" strokeWidth={1.5} />
-              </a>
+          <a href={project.href} target="_blank" rel="noreferrer" className="focus-ring block" aria-label={`${project.title} on GitHub`}>
+            <div className="overflow-hidden bg-ochre">
+              <img
+                src={project.cover}
+                alt=""
+                width={640}
+                height={400}
+                className="aspect-[16/10] w-full object-cover mix-blend-multiply grayscale transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
             </div>
-            <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">{project.description}</p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span key={tag} className="rounded-full border border-foreground/15 bg-foreground/[0.04] px-2 py-1 font-mono text-[0.575rem] uppercase tracking-[0.1em] text-muted-foreground">
-                  {tag}
-                </span>
-              ))}
+            <div className="mt-5 flex items-baseline justify-between gap-4 border-t border-ink/20 pt-4">
+              <span className="eyebrow">{String(index + 1).padStart(2, '0')}</span>
+              <ArrowUpRight className="h-4 w-4 text-umber transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} aria-hidden="true" />
             </div>
-          </div>
+            <h3 className="display mt-3 text-[30px] font-normal leading-[1.05]">{project.title}</h3>
+          </a>
+          <p className="mt-3 text-sm leading-6 text-umber">{project.description}</p>
+          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-cobalt">{project.tags.join(' · ')}</p>
         </motion.article>
       ))}
     </div>
@@ -122,45 +105,43 @@ function ProjectsPanel() {
 
 function PublicationsPanel() {
   return (
-    <div className="mx-auto max-w-2xl divide-y divide-border">
-      <article className="flex items-center justify-between gap-5 py-5">
+    <div className="mx-auto max-w-3xl border-t border-ink/20">
+      <a
+        href="https://amazon.com"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Read Wired for Discipline on Amazon"
+        className="focus-ring group flex items-center justify-between gap-6 border-b border-ink/20 py-8"
+      >
         <div>
-          <p className="font-semibold tracking-tight">WIRED FOR DISCIPLINE</p>
-          <p className="mt-2 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">Amazon · Jan 2026</p>
+          <p className="eyebrow">Book &middot; Amazon &middot; Jan 2026</p>
+          <p className="display mt-3 text-[clamp(32px,4vw,52px)]">Wired for Discipline</p>
         </div>
-        <a
-          href="https://amazon.com"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Read Wired for Discipline on Amazon"
-          className="focus-ring text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ExternalLink className="h-5 w-5" strokeWidth={1.5} />
-        </a>
-      </article>
+        <ArrowUpRight className="h-6 w-6 shrink-0 text-umber transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" strokeWidth={1.25} />
+      </a>
     </div>
   )
 }
 
 function StackPanel() {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+    <div className="grid grid-cols-2 border-l border-t border-ink/20 sm:grid-cols-4 lg:grid-cols-7">
       {stack.map(([name, slug]) => (
-        <div key={name} className="card-surface flex min-h-28 flex-col items-center justify-center gap-3 p-4 text-center">
+        <div key={name} className="flex min-h-32 flex-col items-center justify-center gap-3 border-b border-r border-ink/20 p-4 text-center">
           {slug ? (
             <img
               src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-original.svg`}
-              alt={`${name} icon`}
-              width={32}
-              height={32}
-              className="h-8 w-8 grayscale"
+              alt=""
+              width={30}
+              height={30}
+              className="h-[30px] w-[30px] opacity-80 grayscale sepia"
             />
           ) : (
-            <span className="flex h-8 w-8 items-center justify-center border border-border font-mono text-sm text-muted-foreground" aria-hidden="true">
-              {name.slice(0, 2).toUpperCase()}
+            <span className="display flex h-[30px] w-[30px] items-center justify-center text-xl text-umber" aria-hidden="true">
+              {name.slice(0, 2)}
             </span>
           )}
-          <span className="font-mono text-[0.625rem] uppercase tracking-[0.09em] text-muted-foreground">{name}</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-umber">{name}</span>
         </div>
       ))}
     </div>
@@ -172,51 +153,52 @@ export function Showcase() {
   const tabs: { id: Tab; label: string }[] = [
     { id: 'projects', label: 'Projects' },
     { id: 'publications', label: 'Publications' },
-    { id: 'stack', label: 'Tech Stack' },
+    { id: 'stack', label: 'Tech stack' },
   ]
 
   return (
-    <section id="portfolio" className="mx-auto max-w-6xl px-5 py-24">
-      <Reveal className="text-center">
-        <p className="eyebrow">Selected work</p>
-        <h2 className="mt-4 text-4xl font-extrabold tracking-[-0.04em] sm:text-5xl">Portfolio Showcase</h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Selected work across machine learning, forecasting and applied analytics.</p>
-      </Reveal>
+    <section id="portfolio" className="bg-paper-2 px-[6vw] py-[16vh] text-ink">
+      <div className="mx-auto max-w-6xl">
+        <Reveal className="flex flex-wrap items-end justify-between gap-8">
+          <div>
+            <p className="eyebrow">03 &middot; Selected work</p>
+            <h2 className="display mt-6 text-[clamp(44px,6.2vw,92px)]">Portfolio</h2>
+            <p className="mt-4 max-w-md text-umber">Machine learning, forecasting and applied analytics, from Nairobi outward.</p>
+          </div>
+          <div className="flex gap-6 sm:gap-9" role="tablist" aria-label="Portfolio sections">
+            {tabs.map(({ id, label }) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={tab === id}
+                onClick={() => setTab(id)}
+                className={cn(
+                  'focus-ring border-b pb-2 text-[11px] font-semibold uppercase tracking-[0.24em] transition-colors',
+                  tab === id ? 'border-ink text-ink' : 'border-transparent text-umber/70 hover:text-ink',
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </Reveal>
 
-      <Reveal className="mt-9" delay={0.08}>
-        <div className="glass-surface mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full p-1" role="tablist" aria-label="Portfolio sections">
-          {tabs.map(({ id, label }) => (
-            <button
-              key={id}
-              type="button"
-              role="tab"
-              aria-selected={tab === id}
-              onClick={() => setTab(id)}
-              className={cn(
-                'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none whitespace-nowrap rounded-full px-4 py-2 text-xs text-muted-foreground transition-colors hover:text-foreground sm:text-sm',
-                tab === id && 'bg-foreground/10 text-foreground shadow-sm shadow-black/10',
-              )}
+        <div className="mt-14 min-h-[26rem]">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={tab}
+              role="tabpanel"
+              aria-label={tabs.find((item) => item.id === tab)?.label}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
-              {label}
-            </button>
-          ))}
+              {tab === 'projects' ? <ProjectsPanel /> : tab === 'publications' ? <PublicationsPanel /> : <StackPanel />}
+            </motion.div>
+          </AnimatePresence>
         </div>
-      </Reveal>
-
-      <div className="mt-10 min-h-[26rem]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={tab}
-            role="tabpanel"
-            aria-label={tabs.find((item) => item.id === tab)?.label}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {tab === 'projects' ? <ProjectsPanel /> : tab === 'publications' ? <PublicationsPanel /> : <StackPanel />}
-          </motion.div>
-        </AnimatePresence>
       </div>
     </section>
   )
