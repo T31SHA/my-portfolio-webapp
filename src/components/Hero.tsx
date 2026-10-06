@@ -158,23 +158,15 @@ export function Hero() {
   return (
     <section id="home" ref={trackRef} className="hero-track" aria-label="Introduction">
       <div ref={stageRef} className="hero-stage">
-        {/* One photograph, used twice: the far peaks, and a masked copy of the treeline that moves faster */}
         <img
-          className="plate plate-bleed plate-peaks"
-          src="/assets/hero-peaks.webp"
-          srcSet="/assets/hero-peaks-1100.webp 1100w, /assets/hero-peaks.webp 2000w"
+          className="plate plate-bleed plate-city"
+          src="/assets/hero-city.webp"
+          srcSet="/assets/hero-city-1100.webp 1100w, /assets/hero-city.webp 2000w"
           sizes="100vw"
-          alt="Sunlit snow-streaked peaks above dark forested hills"
+          alt="Downtown towers at dusk above a quiet city intersection"
           fetchPriority="high"
         />
         <div className="plate plate-bleed plate-scrim" />
-        <img
-          className="plate plate-bleed plate-treeline"
-          src="/assets/hero-peaks.webp"
-          srcSet="/assets/hero-peaks-1100.webp 1100w, /assets/hero-peaks.webp 2000w"
-          sizes="100vw"
-          alt=""
-        />
 
         <p className="hero-kicker eyebrow">Data Scientist &middot; Nairobi, Kenya</p>
         <h1 className="hero-title">

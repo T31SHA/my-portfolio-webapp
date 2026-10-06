@@ -190,11 +190,11 @@ button {
   height: 100%;
 }
 
-/* z0 — the far peaks: pull back only slightly, then push in */
-.plate-peaks {
+/* z0 — the city: pull back only slightly, then push in */
+.plate-city {
   z-index: 0;
   object-fit: cover;
-  object-position: 50% 24%;
+  object-position: 50% 58%;
   transform-origin: 50% 45%;
   transform:
     translate(calc(var(--mx) * -6px), calc(var(--my) * -4px))
@@ -202,27 +202,12 @@ button {
   filter: blur(calc(2px * var(--b2))) brightness(calc(1 - 0.25 * var(--b2)));
 }
 
-/* z1 — scrim: keeps paper type readable against a bright sky */
+/* z1 — scrim: keeps paper type readable against the sky and lit facades */
 .plate-scrim {
   z-index: 1;
   background:
     linear-gradient(to bottom, rgba(13, 20, 32, 0.66) 0%, rgba(13, 20, 32, 0.24) 36%, rgba(13, 20, 32, 0) 55%),
     linear-gradient(to top, rgba(20, 13, 8, 0.55) 0%, rgba(20, 13, 8, 0) 30%);
-}
-
-/* z2 — the treeline: same photo, masked to the forest, dollies out faster from the bottom edge */
-.plate-treeline {
-  z-index: 2;
-  object-fit: cover;
-  object-position: 50% 24%;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 54%, #000 74%);
-  mask-image: linear-gradient(to bottom, transparent 54%, #000 74%);
-  transform-origin: 50% 100%;
-  transform:
-    translateX(calc(var(--mx) * -22px))
-    scale(calc(1.24 - 0.16 * var(--b0) + 0.6 * var(--b2)));
-  filter: blur(calc(3px * var(--b2))) brightness(calc(0.82 - 0.2 * var(--b2)));
-  opacity: calc(1 - 0.6 * var(--b2));
 }
 
 /* z4 — type */
