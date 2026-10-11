@@ -19,7 +19,7 @@ export function Footer() {
           ))}
         </div>
         <p className="text-center text-[10px] font-semibold uppercase tracking-[0.24em] text-paper/50 sm:text-right">
-          © {new Date().getFullYear()} &middot; Nairobi
+          © {new Date().getFullYear()} &middot; Data/ML Engineer &middot; Nairobi
           <a href="https://unsplash.com/photos/FQtHzesjLEw" target="_blank" rel="noreferrer" className="focus-ring mt-1.5 block normal-case tracking-[0.08em] hover:text-ochre">
             Opening photo by Aditya Chinchure on Unsplash
           </a>

@@ -52,7 +52,7 @@ export function Nav() {
       <div className="flex items-center justify-between gap-4 px-[4vw] py-5 sm:py-6">
         <a href="#home" className="focus-ring flex shrink-0 items-baseline gap-3">
           <b className="font-display text-[22px] font-medium uppercase tracking-[0.14em]">S. Abdi</b>
-          <span className="eyebrow hidden md:inline">Data Science</span>
+          <span className="eyebrow hidden md:inline">Data / ML</span>
         </a>
         <div className="flex items-center gap-[clamp(10px,2.4vw,34px)]">
           {links.map((link) => (

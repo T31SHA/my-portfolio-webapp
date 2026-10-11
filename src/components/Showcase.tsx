@@ -9,43 +9,49 @@ type Tab = 'projects' | 'publications' | 'stack'
 const projects = [
   {
     title: 'User Behaviour Prediction',
-    description: 'Predictive model analyzing user behavior patterns to support product and engagement decisions.',
-    tags: ['Python', 'scikit-learn', 'Pandas'],
+    description:
+      'A product team needed five mobile-usage tiers, not a raw telemetry table. Logistic regression and a Random Forest were fit on 700 rows (battery, screen time, app use) with an 80/20 stratified split. Holdout accuracy and weighted F1 were both 1.00; the classes were highly separable.',
+    tags: ['scikit-learn', 'Random Forest', 'Pandas'],
     cover: '/assets/cover-01.svg',
     href: 'https://github.com/T31SHA/User-Behaviour_Prediction',
   },
   {
     title: 'Customer Churn Prediction',
-    description: 'Machine learning model identifying at-risk customers to support retention strategy.',
-    tags: ['XGBoost', 'Pandas', 'Matplotlib'],
+    description:
+      'Churn was visible only after a telecom customer had already left. A leakage-safe pipeline on 3,333 accounts (about 15% churned) tuned a Random Forest for recall against a balanced logistic baseline. Holdout recall on the churned class: [X%].',
+    tags: ['scikit-learn', 'Random Forest', 'Pandas'],
     cover: '/assets/cover-02.svg',
     href: 'https://github.com/T31SHA/Customer-Churn_Prediction',
   },
   {
     title: 'NSE Stock Market Predictions',
-    description: 'Time-series forecasting for Nairobi Securities Exchange stock movements.',
-    tags: ['Python', 'Time-series', 'Jupyter'],
+    description:
+      "Safaricom's daily move on the Nairobi Securities Exchange is large enough to matter to a portfolio. A Random Forest regressor trains on the first 80% of the year and tests on the last 20%, so the split stays forward-looking. Reported MAE on that holdout: KES 0.12.",
+    tags: ['Random Forest', 'Time-series', 'Pandas'],
     cover: '/assets/cover-03.svg',
     href: 'https://github.com/T31SHA/NSE--Stock-Market_-Predictions',
   },
   {
     title: 'Drought Forecasting & Prediction',
-    description: 'Multi-horizon SPEI drought forecasts for northwestern Algeria, built from 76 years of climate data.',
-    tags: ['Python', 'XGBoost', 'Streamlit'],
+    description:
+      'A grid point in northwestern Algeria needed multi-month drought warning, not a historical chart. SARIMA, Ridge, XGBoost, and an LSTM were compared on 76 years of monthly SPEI and served in Streamlit. Best one-month SPEI-12 forecast: Ridge, R² 0.951, hit rate 98.3%.',
+    tags: ['Ridge', 'XGBoost', 'Streamlit'],
     cover: '/assets/cover-04.svg',
     href: 'https://github.com/T31SHA/Drought-Forcasting_Prediction',
   },
   {
     title: 'Nairobi Flood Guard AI',
-    description: 'Flood susceptibility analysis and matatu route optimization for flood-aware travel in Kenya.',
-    tags: ['Flood Risk', 'Route Optimization', 'Tableau'],
+    description:
+      'Flood response in Nairobi is reactive, and matatu routes still run through wards that flood. A team scored susceptibility from terrain, rainfall, and satellite extent, then rerouted road segments around high-risk wards. County-held-out XGBoost: ROC AUC 0.889, recall 0.80, precision 0.57.',
+    tags: ['XGBoost', 'Spatial CV', 'Tableau'],
     cover: '/assets/cover-05.svg',
     href: 'https://github.com/T31SHA/Nairobi_Flood_Guard-AI',
   },
   {
     title: 'CassavaWatch',
-    description: 'Mobile-first cassava disease diagnosis with treatment advice in English or Swahili, including offline support.',
-    tags: ['Python', 'Plant Disease', 'Offline-ready'],
+    description:
+      'Farmers and extension officers need a cassava diagnosis in the field, including offline and in Swahili. Three to six leaf photos per plant are classified as CBB, CBSD, CGM, CMD, or healthy, with treatment advice and an offline queue. Held-out accuracy on 500 balanced iCassava images: 75.2%.',
+    tags: ['TensorFlow', 'TFLite', 'FastAPI'],
     cover: '/assets/cover-06.svg',
     href: 'https://github.com/T31SHA/CassavaWatch',
   },
@@ -55,17 +61,17 @@ const stack = [
   ['Python', 'python'],
   ['Pandas', 'pandas'],
   ['NumPy', 'numpy'],
+  ['SciPy', null],
   ['scikit-learn', 'scikitlearn'],
   ['TensorFlow', 'tensorflow'],
   ['PyTorch', 'pytorch'],
   ['Keras', 'keras'],
+  ['MLflow', null],
   ['Matplotlib', 'matplotlib'],
   ['Plotly', 'plotly'],
-  ['Bash', 'bash'],
-  ['Git', 'git'],
-  ['SciPy', null],
-  ['mlflow', null],
   ['Tableau', null],
+  ['Git', 'git'],
+  ['Bash', 'bash'],
 ] as const
 
 function ProjectsPanel() {
@@ -125,7 +131,11 @@ function PublicationsPanel() {
 
 function StackPanel() {
   return (
-    <div className="grid grid-cols-2 border-l border-t border-ink/20 sm:grid-cols-4 lg:grid-cols-7">
+    <div>
+      <p className="mb-6 max-w-3xl text-sm leading-6 text-umber">
+        Classification, regression, time-series forecasting, feature engineering, and model evaluation. The grid runs data, then modeling, then visualization, then delivery. Notebooks also use Seaborn, XGBoost, Streamlit, and FastAPI.
+      </p>
+      <div className="grid grid-cols-2 border-l border-t border-ink/20 sm:grid-cols-4 lg:grid-cols-7">
       {stack.map(([name, slug]) => (
         <div key={name} className="flex min-h-32 flex-col items-center justify-center gap-3 border-b border-r border-ink/20 p-4 text-center">
           {slug ? (
@@ -144,6 +154,7 @@ function StackPanel() {
           <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-umber">{name}</span>
         </div>
       ))}
+      </div>
     </div>
   )
 }
@@ -153,7 +164,7 @@ export function Showcase() {
   const tabs: { id: Tab; label: string }[] = [
     { id: 'projects', label: 'Projects' },
     { id: 'publications', label: 'Publications' },
-    { id: 'stack', label: 'Tech stack' },
+    { id: 'stack', label: 'Skills' },
   ]
 
   return (
@@ -163,7 +174,7 @@ export function Showcase() {
           <div>
             <p className="eyebrow">03 &middot; Selected work</p>
             <h2 className="display mt-6 text-[clamp(44px,6.2vw,92px)]">Portfolio</h2>
-            <p className="mt-4 max-w-md text-umber">Machine learning, forecasting and applied analytics, from Nairobi outward.</p>
+            <p className="mt-4 max-w-md text-umber">Each project states the problem, the approach, and the holdout result.</p>
           </div>
           <div className="flex gap-6 sm:gap-9" role="tablist" aria-label="Portfolio sections">
             {tabs.map(({ id, label }) => (

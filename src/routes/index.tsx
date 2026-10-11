@@ -11,10 +11,10 @@ import { Showcase } from '@/components/Showcase'
 export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
-      { title: 'Sharahbill Abdi — Data Scientist in Nairobi' },
-      { name: 'description', content: 'Portfolio of Sharahbill Abdi, a Nairobi-based data scientist focused on machine learning, forecasting and applied analytics.' },
-      { property: 'og:title', content: 'Sharahbill Abdi — Data Scientist in Nairobi' },
-      { property: 'og:description', content: 'Machine learning, forecasting and applied analytics by Sharahbill Abdi.' },
+      { title: 'Sharahbill Mohamed Abdi — Data/ML Engineer in Nairobi' },
+      { name: 'description', content: 'Data/ML engineer in Nairobi. Classification, time-series forecasting, and decision-support systems, each with the holdout metric next to the decision.' },
+      { property: 'og:title', content: 'Sharahbill Mohamed Abdi — Data/ML Engineer in Nairobi' },
+      { property: 'og:description', content: 'Classification, forecasting, and decision-support systems by Sharahbill Mohamed Abdi, with the holdout metric next to the decision.' },
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
