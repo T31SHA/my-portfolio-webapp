@@ -13,7 +13,7 @@ type CommentEntry = {
 const initialComments: CommentEntry[] = [
   {
     name: 'Placeholder Visitor',
-    text: 'Clean portfolio — the churn prediction write-up was a great read.',
+    text: 'The project notes make the decision and the holdout number easy to find.',
     time: '2 days ago',
   },
 ]
@@ -61,17 +61,17 @@ export function Contact() {
         <Reveal>
           <p className="eyebrow">04 &middot; Contact</p>
           <h2 className="display mt-6 text-[clamp(44px,6.2vw,92px)]">
-            Got a dataset,
+            A role, a dataset,
             <br />
             <em className="text-ochre">or a question?</em>
           </h2>
-          <p className="mt-6 max-w-xl text-paper/70">Leave a message for work and collaborations, or sign the guestbook.</p>
+          <p className="mt-6 max-w-xl text-paper/70">For hiring managers and collaborators. Or sign the guestbook.</p>
         </Reveal>
 
         <div className="mt-[10vh] grid gap-16 md:grid-cols-2 md:gap-20">
           <Reveal delay={0.08}>
             <h3 className="display text-[34px] font-normal">Get in touch</h3>
-            <p className="mt-2 text-sm leading-6 text-paper/60">Direct line to my inbox.</p>
+            <p className="mt-2 text-sm leading-6 text-paper/60">Roles, collaborations, and project questions.</p>
             <form className="mt-8 space-y-3" onSubmit={submitMessage}>
               <label className="block">
                 <span className="sr-only">Name</span>

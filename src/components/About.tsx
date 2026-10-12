@@ -2,9 +2,9 @@ import { Download } from 'lucide-react'
 import { Reveal } from '@/components/Reveal'
 
 const stats = [
-  { value: '6+', label: 'Projects', note: 'Shipped and open-source' },
-  { value: '1+', label: 'Publications', note: 'Published author' },
-  { value: '3+', label: 'Years', note: 'Always learning' },
+  { value: '6+', label: 'Projects', note: 'Open-source ML, forecasting, and decision support' },
+  { value: '1', label: 'Book', note: 'Wired for Discipline, January 2026' },
+  { value: '3+', label: 'Years', note: 'Modeling, forecasting, and analyst training' },
 ]
 
 export function About() {
@@ -14,14 +14,31 @@ export function About() {
         <Reveal>
           <p className="eyebrow">02 &middot; About me</p>
           <h2 className="display mt-6 text-[clamp(44px,6.2vw,92px)]">
-            Simplicity, scalability,
+            From raw data
             <br />
-            <em className="text-umber">and impact.</em>
+            <em className="text-umber">to the decision.</em>
           </h2>
         </Reveal>
         <Reveal delay={0.08} className="md:pt-14">
-          <p className="text-[17px] leading-[1.7] text-umber">
-            I am a data-focused technologist with a strong interest in data science, machine learning, and building systems that solve real-world problems. I focus on transforming raw data into clear, actionable insights that support effective decision-making.
+          <p className="text-[17px] leading-[1.7] text-pretty text-umber">
+            I am Sharahbill Mohamed Abdi, a data/ML engineer in Nairobi. I take a messy table through to a model, a holdout metric, and the decision that metric is supposed to change, across telecom, markets, climate, and agriculture.
+          </p>
+          <ul className="mt-6 space-y-3 text-[17px] leading-[1.7] text-umber">
+            <li className="grid grid-cols-[0.7rem_1fr] gap-3">
+              <span className="mt-[0.55em] h-1.5 w-1.5 bg-ochre" aria-hidden="true" />
+              <span>
+                Teach Python data analysis (Pandas, NumPy, and visualization) to multiple cohorts as a part-time Data Analysis Trainer at Trainify Institute of Technology, Nairobi (remote/hybrid), so each cohort can open a raw file and work it themselves.
+              </span>
+            </li>
+            <li className="grid grid-cols-[0.7rem_1fr] gap-3">
+              <span className="mt-[0.55em] h-1.5 w-1.5 bg-ochre" aria-hidden="true" />
+              <span>
+                Guide those cohorts from a raw dataset to an analysis they can explain: the cleaning, the chart, and the recommendation they would hand to a stakeholder.
+              </span>
+            </li>
+          </ul>
+          <p className="mt-6 text-[17px] leading-[1.7] text-pretty text-umber">
+            Data Science at Moringa School (ongoing), after Data Visualization with Python (2025). ICDL certified. Best Problem Solver, Moringa School Bootcamp. Top 10% in a Kaggle Data Visualization Challenge.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a href="/assets/sharahbil-abdi-cv.pdf" download className="btn-ink focus-ring">
@@ -43,8 +60,8 @@ export function About() {
                 {String(index + 1).padStart(2, '0')} &middot; {label}
               </dt>
               <dd className="m-0">
-                <span className="display mt-4 block text-[clamp(64px,7vw,108px)] leading-none">{value}</span>
-                <span className="mt-3 block text-sm text-umber">{note}</span>
+                <span className="display mt-5 block text-[clamp(64px,7vw,108px)] tabular-nums leading-none">{value}</span>
+                <span className="mt-4 block text-sm leading-relaxed text-pretty text-umber">{note}</span>
               </dd>
             </div>
           ))}

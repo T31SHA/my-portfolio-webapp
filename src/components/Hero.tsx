@@ -29,7 +29,7 @@ const smoothstep = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t)
 }
 
-const tags = ['Python', 'TensorFlow', 'PyTorch', 'Pandas', 'scikit-learn']
+const tags = ['Python', 'Pandas', 'scikit-learn', 'PyTorch', 'TensorFlow']
 
 export function Hero() {
   const trackRef = useRef<HTMLElement>(null)
@@ -168,16 +168,16 @@ export function Hero() {
         />
         <div className="plate plate-bleed plate-scrim" />
 
-        <p className="hero-kicker eyebrow">Data Scientist &middot; Nairobi, Kenya</p>
+        <p className="hero-kicker eyebrow">Data/ML Engineer &middot; Nairobi, Kenya</p>
         <h1 className="hero-title">
-          Sharahbill<span className="sr-only"> Abdi, data scientist in Nairobi</span>
+          Sharahbill<span className="sr-only"> Mohamed Abdi, data/ML engineer in Nairobi</span>
         </h1>
         <div className="hero-lede">
           <p className="text-[clamp(15px,1.35vw,19px)] leading-[1.55]">
-            Machine learning, forecasting and applied analytics: turning raw data into clear decisions, grounded in simplicity, scalability and impact.
+            I build classification and forecasting systems that turn operational data into a decision a team can act on.
           </p>
           <p className="mt-3.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-umber">
-            Open to collaborations &middot; 1.2921&deg; S, 36.8219&deg; E
+            Open to roles &amp; collaborations &middot; 1.2921&deg; S, 36.8219&deg; E
           </p>
         </div>
 
@@ -203,9 +203,9 @@ export function Hero() {
 
         <div className="leaf leaf-r flex flex-col justify-center bg-paper p-[clamp(20px,3vw,44px)] text-ink shadow-[0_30px_60px_-28px_rgba(0,0,0,0.7)]">
           <p className="eyebrow !text-cobalt">01 &middot; Who I am</p>
-          <h2 className="display mt-4 text-[clamp(28px,3.4vw,50px)]">Raw data, read closely.</h2>
+          <h2 className="display mt-4 text-[clamp(28px,3.4vw,50px)]">Built for the decision.</h2>
           <p className="mt-5 text-[clamp(13px,1vw,15px)] leading-[1.65] text-umber">
-            I am a data-focused technologist with a strong interest in data science, machine learning, and building systems that solve real-world problems. I turn raw data into clear, actionable insight.
+            Data/ML engineer. I ship classification and forecasting systems, and I teach that workflow to analysts at Trainify Institute of Technology in Nairobi.
           </p>
           <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.24em] text-ochre">{tags.join(' · ')}</p>
         </div>
@@ -213,19 +213,19 @@ export function Hero() {
         <aside className="hero-caption cap-1">
           <small className="eyebrow mb-2.5 block !text-cobalt">Based in &middot; Nairobi</small>
           <h2 className="display mb-2 text-[30px] font-normal leading-[1.05]">Where the data meets the ground.</h2>
-          <p className="text-sm leading-[1.55] text-umber">Floods, drought, markets, crops: problems I can stand next to, modelled with care.</p>
+          <p className="text-sm leading-[1.55] text-umber">Floods, drought, markets, crops: each model is tied to a decision someone has to make.</p>
         </aside>
         <aside className="hero-caption cap-2">
           <small className="eyebrow mb-2.5 block !text-cobalt">The practice</small>
-          <h2 className="display mb-2 text-[30px] font-normal leading-[1.05]">Observe, model, forecast.</h2>
-          <p className="text-sm leading-[1.55] text-umber">Time-series, classification and decision support, built to be read by the people who use it.</p>
+          <h2 className="display mb-2 text-[30px] font-normal leading-[1.05]">Model it, then hand it off.</h2>
+          <p className="text-sm leading-[1.55] text-umber">Classification and time-series forecasts, scored on a holdout and written for the person who will use them.</p>
         </aside>
         <div className="cap-3">
           <p className="eyebrow">In one line</p>
           <p className="display mt-5 text-[clamp(38px,6.4vw,104px)] text-paper">
-            &ldquo;Turning raw data into
+            &ldquo;Models that change
             <br />
-            decisions that matter.&rdquo;
+            the next decision.&rdquo;
           </p>
         </div>
 

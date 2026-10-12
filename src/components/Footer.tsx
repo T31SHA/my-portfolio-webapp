@@ -13,14 +13,14 @@ export function Footer() {
         <p className="font-display text-[22px] font-medium uppercase tracking-[0.14em]">Sharahbill Abdi</p>
         <div className="flex items-center gap-6">
           {socials.map(({ label, href, icon: Icon }) => (
-            <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="focus-ring text-paper/60 transition-colors hover:text-ochre">
+            <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="focus-ring text-paper/60 transition-[color,transform] duration-300 hover:-translate-y-0.5 hover:text-ochre">
               <Icon className="h-5 w-5" strokeWidth={1.5} />
             </a>
           ))}
         </div>
         <p className="text-center text-[10px] font-semibold uppercase tracking-[0.24em] text-paper/50 sm:text-right">
-          © {new Date().getFullYear()} &middot; Nairobi
-          <a href="https://unsplash.com/photos/FQtHzesjLEw" target="_blank" rel="noreferrer" className="focus-ring mt-1.5 block normal-case tracking-[0.08em] hover:text-ochre">
+          © {new Date().getFullYear()} &middot; Data/ML Engineer &middot; Nairobi
+            <a href="https://unsplash.com/photos/FQtHzesjLEw" target="_blank" rel="noreferrer" className="focus-ring mt-1.5 block normal-case tracking-[0.08em] transition-colors duration-300 hover:text-ochre">
             Opening photo by Aditya Chinchure on Unsplash
           </a>
         </p>
