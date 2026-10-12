@@ -27,13 +27,13 @@ export function About() {
             <li className="grid grid-cols-[0.7rem_1fr] gap-3">
               <span className="mt-[0.55em] h-1.5 w-1.5 bg-ochre" aria-hidden="true" />
               <span>
-                Teach Python data analysis (Pandas, NumPy, and visualization) to multiple cohorts as a part-time Data Analysis Trainer at Trainify Institute of Technology, Nairobi (remote/hybrid). Cohorts taught: [X].
+                Teach Python data analysis (Pandas, NumPy, and visualization) to multiple cohorts as a part-time Data Analysis Trainer at Trainify Institute of Technology, Nairobi (remote/hybrid), so each cohort can open a raw file and work it themselves.
               </span>
             </li>
             <li className="grid grid-cols-[0.7rem_1fr] gap-3">
               <span className="mt-[0.55em] h-1.5 w-1.5 bg-ochre" aria-hidden="true" />
               <span>
-                Take those cohorts from a raw dataset to an analysis they can explain: the cleaning, the chart, and the recommendation. Share of each cohort that finished an end-to-end project: [X%].
+                Guide those cohorts from a raw dataset to an analysis they can explain: the cleaning, the chart, and the recommendation they would hand to a stakeholder.
               </span>
             </li>
           </ul>

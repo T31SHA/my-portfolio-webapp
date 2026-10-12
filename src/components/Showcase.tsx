@@ -19,7 +19,7 @@ const projects = [
   {
     title: 'Customer Churn Prediction',
     description:
-      'Churn was visible only after a telecom customer had already left. A leakage-safe pipeline on 3,333 accounts (about 15% churned) tuned a Random Forest for recall against a balanced logistic baseline. Holdout recall on the churned class: [X%].',
+      'Churn was visible only after a telecom customer had already left. A leakage-safe pipeline on 3,333 accounts (about 15% churned) tuned a Random Forest for recall against a balanced logistic baseline, so likely leavers can be flagged before they cancel.',
     tags: ['scikit-learn', 'Random Forest', 'Pandas'],
     chart: 'churn' as ChartId,
     href: 'https://github.com/T31SHA/Customer-Churn_Prediction',
@@ -137,25 +137,59 @@ function ProjectsPanel() {
   )
 }
 
+const publications = [
+  {
+    eyebrow: 'Book · Amazon · Jan 2026',
+    title: 'Wired for Discipline',
+    href: 'https://www.amazon.com/WIRED-DISCIPLINE-People-Execute-Anyway-ebook/dp/B0GFXK3RD2/ref=sr_1_2?sr=8-2',
+    label: 'Read Wired for Discipline on Amazon',
+    external: true,
+  },
+  {
+    eyebrow: 'Reference · PDF · 2026',
+    title: 'SQL Cheat Sheet',
+    detail:
+      'The complete reference for data work. A4, 25 sections, 3 appendices, and 88 code examples, tested on PostgreSQL 17. Standard SQL, PostgreSQL, MySQL, and SQL Server.',
+    href: '/assets/sql-cheat-sheet.pdf',
+    label: 'Download the SQL Cheat Sheet PDF',
+    cover: '/assets/sql-cheat-sheet-cover.webp',
+    external: false,
+  },
+] as const
+
 function PublicationsPanel() {
   return (
     <div className="mx-auto max-w-3xl border-t border-ink/20">
-      <a
-        href="https://amazon.com"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Read Wired for Discipline on Amazon"
-        className="focus-ring group flex items-center justify-between gap-6 border-b border-ink/20 py-8 transition-colors duration-300 hover:border-ochre"
-      >
-        <div>
-          <p className="eyebrow flex items-center gap-2">
-            <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />
-            Book &middot; Amazon &middot; Jan 2026
-          </p>
-          <p className="display mt-3 text-[clamp(32px,4vw,52px)]">Wired for Discipline</p>
-        </div>
-        <ArrowUpRight className="h-6 w-6 shrink-0 text-umber transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" strokeWidth={1.25} />
-      </a>
+      {publications.map((item) => (
+        <a
+          key={item.title}
+          href={item.href}
+          {...(item.external ? { target: '_blank', rel: 'noreferrer' } : { download: true })}
+          aria-label={item.label}
+          className="focus-ring group flex items-center justify-between gap-6 border-b border-ink/20 py-8 transition-colors duration-300 hover:border-ochre"
+        >
+          <div className="flex min-w-0 items-center gap-5">
+            {'cover' in item ? (
+              <img
+                src={item.cover}
+                alt=""
+                width={72}
+                height={102}
+                className="h-[102px] w-[72px] shrink-0 object-cover"
+              />
+            ) : null}
+            <div className="min-w-0">
+              <p className="eyebrow flex items-center gap-2">
+                <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />
+                {item.eyebrow}
+              </p>
+              <p className="display mt-3 text-[clamp(32px,4vw,52px)]">{item.title}</p>
+              {'detail' in item ? <p className="mt-3 max-w-xl text-sm leading-6 text-pretty text-umber">{item.detail}</p> : null}
+            </div>
+          </div>
+          <ArrowUpRight className="h-6 w-6 shrink-0 text-umber transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" strokeWidth={1.25} />
+        </a>
+      ))}
     </div>
   )
 }

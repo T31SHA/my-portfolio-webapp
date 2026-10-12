@@ -40,7 +40,7 @@ function Bars({
   max,
   top = 62,
 }: {
-  rows: { name: string; value: number; label: string; accent?: boolean; placeholder?: boolean }[]
+  rows: { name: string; value: number; label: string; accent?: boolean }[]
   max: number
   top?: number
 }) {
@@ -49,20 +49,16 @@ function Bars({
   const step = rows.length > 4 ? 24 : 30
   return rows.map((row, index) => {
     const y = top + index * step
-    const width = row.placeholder ? 0 : Math.max(2, (row.value / max) * track)
+    const width = Math.max(2, (row.value / max) * track)
     return (
       <g key={row.name}>
         <text x="14" y={y + 11} fill={PAPER} fontFamily={SANS} fontSize="11">
           {row.name}
         </text>
         <rect x={x0} y={y} width={track} height="14" fill={PAPER} fillOpacity="0.08" />
-        {row.placeholder ? (
-          <rect x={x0} y={y} width={track} height="14" fill="none" stroke={OCHRE} strokeDasharray="3 2" />
-        ) : (
-          <rect x={x0} y={y} width={width} height="14" fill={row.accent ? OCHRE : COBALT} />
-        )}
-        <text x="306" y={y + 11} fill={row.placeholder ? OCHRE : PAPER} fontFamily={SANS} fontSize="11" textAnchor="end">
-          {row.placeholder ? '[X%]' : row.label}
+        <rect x={x0} y={y} width={width} height="14" fill={row.accent ? OCHRE : COBALT} />
+        <text x="306" y={y + 11} fill={PAPER} fontFamily={SANS} fontSize="11" textAnchor="end">
+          {row.label}
         </text>
       </g>
     )
@@ -98,28 +94,21 @@ function ChurnChart() {
   return (
     <ChartShell
       title="Class balance"
-      note="3,333 accounts · recall not in the write-up"
-      label="About 85 percent retained and 15 percent churned across 3,333 accounts. Holdout recall is a placeholder."
+      note="3,333 telecom accounts"
+      label="About 85 percent retained and 15 percent churned across 3,333 accounts."
     >
-      <rect x={x} y="64" width={retained} height="26" fill={COBALT} />
-      <rect x={x + retained} y="64" width={width - retained} height="26" fill={OCHRE} />
-      <rect x="14" y="102" width="8" height="8" fill={COBALT} />
-      <text x="28" y="110" fill={PAPER} fontFamily={SANS} fontSize="11">
+      <rect x={x} y="72" width={retained} height="36" fill={COBALT} />
+      <rect x={x + retained} y="72" width={width - retained} height="36" fill={OCHRE} />
+      <rect x="14" y="128" width="8" height="8" fill={COBALT} />
+      <text x="28" y="136" fill={PAPER} fontFamily={SANS} fontSize="11">
         Retained 85%
       </text>
-      <rect x="150" y="102" width="8" height="8" fill={OCHRE} />
-      <text x="164" y="110" fill={PAPER} fontFamily={SANS} fontSize="11">
+      <rect x="150" y="128" width="8" height="8" fill={OCHRE} />
+      <text x="164" y="136" fill={PAPER} fontFamily={SANS} fontSize="11">
         Churned 15%
       </text>
-      <text x="14" y="146" fill={PAPER} fontFamily={SANS} fontSize="11">
-        Churn recall
-      </text>
-      <rect x="108" y="134" width="148" height="14" fill="none" stroke={OCHRE} strokeDasharray="3 2" />
-      <text x="306" y="146" fill={PAPER} fontFamily={SANS} fontSize="11" textAnchor="end">
-        [X%]
-      </text>
-      <text x="14" y="176" fill={PAPER} fillOpacity="0.72" fontFamily={SANS} fontSize="10">
-        Placeholder · holdout recall not reported
+      <text x="14" y="172" fill={PAPER} fillOpacity="0.72" fontFamily={SANS} fontSize="10">
+        Tuned for recall against a balanced logistic baseline
       </text>
     </ChartShell>
   )
