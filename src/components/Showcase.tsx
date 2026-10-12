@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, BookOpen, ChartColumn, Cpu, Database, GitBranch } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { ProjectChart, type ChartId } from '@/components/ProjectCharts'
 import { Reveal } from '@/components/Reveal'
 
 type Tab = 'projects' | 'publications' | 'stack'
@@ -12,7 +13,7 @@ const projects = [
     description:
       'A product team needed five mobile-usage tiers, not a raw telemetry table. Logistic regression and a Random Forest were fit on 700 rows (battery, screen time, app use) with an 80/20 stratified split. Holdout accuracy and weighted F1 were both 1.00; the classes were highly separable.',
     tags: ['scikit-learn', 'Random Forest', 'Pandas'],
-    cover: '/assets/cover-01.svg',
+    chart: 'behaviour' as ChartId,
     href: 'https://github.com/T31SHA/User-Behaviour_Prediction',
   },
   {
@@ -20,7 +21,7 @@ const projects = [
     description:
       'Churn was visible only after a telecom customer had already left. A leakage-safe pipeline on 3,333 accounts (about 15% churned) tuned a Random Forest for recall against a balanced logistic baseline. Holdout recall on the churned class: [X%].',
     tags: ['scikit-learn', 'Random Forest', 'Pandas'],
-    cover: '/assets/cover-02.svg',
+    chart: 'churn' as ChartId,
     href: 'https://github.com/T31SHA/Customer-Churn_Prediction',
   },
   {
@@ -28,7 +29,7 @@ const projects = [
     description:
       "Safaricom's daily move on the Nairobi Securities Exchange is large enough to matter to a portfolio. A Random Forest regressor trains on the first 80% of the year and tests on the last 20%, so the split stays forward-looking. Reported MAE on that holdout: KES 0.12.",
     tags: ['Random Forest', 'Time-series', 'Pandas'],
-    cover: '/assets/cover-03.svg',
+    chart: 'nse' as ChartId,
     href: 'https://github.com/T31SHA/NSE--Stock-Market_-Predictions',
   },
   {
@@ -36,7 +37,7 @@ const projects = [
     description:
       'A grid point in northwestern Algeria needed multi-month drought warning, not a historical chart. SARIMA, Ridge, XGBoost, and an LSTM were compared on 76 years of monthly SPEI and served in Streamlit. Best one-month SPEI-12 forecast: Ridge, R² 0.951, hit rate 98.3%.',
     tags: ['Ridge', 'XGBoost', 'Streamlit'],
-    cover: '/assets/cover-04.svg',
+    chart: 'drought' as ChartId,
     href: 'https://github.com/T31SHA/Drought-Forcasting_Prediction',
   },
   {
@@ -44,7 +45,7 @@ const projects = [
     description:
       'Flood response in Nairobi is reactive, and matatu routes still run through wards that flood. A team scored susceptibility from terrain, rainfall, and satellite extent, then rerouted road segments around high-risk wards. County-held-out XGBoost: ROC AUC 0.889, recall 0.80, precision 0.57.',
     tags: ['XGBoost', 'Spatial CV', 'Tableau'],
-    cover: '/assets/cover-05.svg',
+    chart: 'flood' as ChartId,
     href: 'https://github.com/T31SHA/Nairobi_Flood_Guard-AI',
   },
   {
@@ -52,31 +53,55 @@ const projects = [
     description:
       'Farmers and extension officers need a cassava diagnosis in the field, including offline and in Swahili. Three to six leaf photos per plant are classified as CBB, CBSD, CGM, CMD, or healthy, with treatment advice and an offline queue. Held-out accuracy on 500 balanced iCassava images: 75.2%.',
     tags: ['TensorFlow', 'TFLite', 'FastAPI'],
-    cover: '/assets/cover-06.svg',
+    chart: 'cassava' as ChartId,
     href: 'https://github.com/T31SHA/CassavaWatch',
   },
 ]
 
-const stack = [
-  ['Python', 'python'],
-  ['Pandas', 'pandas'],
-  ['NumPy', 'numpy'],
-  ['SciPy', null],
-  ['scikit-learn', 'scikitlearn'],
-  ['TensorFlow', 'tensorflow'],
-  ['PyTorch', 'pytorch'],
-  ['Keras', 'keras'],
-  ['MLflow', null],
-  ['Matplotlib', 'matplotlib'],
-  ['Plotly', 'plotly'],
-  ['Tableau', null],
-  ['Git', 'git'],
-  ['Bash', 'bash'],
+const skillGroups = [
+  {
+    label: 'Data',
+    icon: Database,
+    items: [
+      ['Python', 'python'],
+      ['Pandas', 'pandas'],
+      ['NumPy', 'numpy'],
+      ['SciPy', null],
+    ],
+  },
+  {
+    label: 'Modeling',
+    icon: Cpu,
+    items: [
+      ['scikit-learn', 'scikitlearn'],
+      ['TensorFlow', 'tensorflow'],
+      ['PyTorch', 'pytorch'],
+      ['Keras', 'keras'],
+      ['MLflow', null],
+    ],
+  },
+  {
+    label: 'Visualization',
+    icon: ChartColumn,
+    items: [
+      ['Matplotlib', 'matplotlib'],
+      ['Plotly', 'plotly'],
+      ['Tableau', null],
+    ],
+  },
+  {
+    label: 'Delivery',
+    icon: GitBranch,
+    items: [
+      ['Git', 'git'],
+      ['Bash', 'bash'],
+    ],
+  },
 ] as const
 
 function ProjectsPanel() {
   return (
-    <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((project, index) => (
         <motion.article
           key={project.title}
@@ -85,24 +110,27 @@ function ProjectsPanel() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-          <a href={project.href} target="_blank" rel="noreferrer" className="focus-ring block" aria-label={`${project.title} on GitHub`}>
-            <div className="overflow-hidden bg-ochre">
-              <img
-                src={project.cover}
-                alt=""
-                width={640}
-                height={400}
-                className="aspect-[16/10] w-full object-cover mix-blend-multiply grayscale transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              />
+          <a href={project.href} target="_blank" rel="noreferrer" className="focus-ring block">
+            <div className="overflow-hidden bg-ink shadow-[0_18px_40px_-32px_rgba(36,26,18,0.9)] transition-shadow duration-300 group-hover:shadow-[0_22px_44px_-28px_rgba(36,26,18,0.85)]">
+              <ProjectChart id={project.chart} />
             </div>
-            <div className="mt-5 flex items-baseline justify-between gap-4 border-t border-ink/20 pt-4">
+            <div className="mt-5 flex items-baseline justify-between gap-4 border-t border-ink/20 pt-4 transition-colors duration-300 group-hover:border-ochre">
               <span className="eyebrow">{String(index + 1).padStart(2, '0')}</span>
-              <ArrowUpRight className="h-4 w-4 text-umber transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} aria-hidden="true" />
+              <ArrowUpRight className="h-4 w-4 text-umber transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ochre" strokeWidth={1.5} aria-hidden="true" />
             </div>
-            <h3 className="display mt-3 text-[30px] font-normal leading-[1.05]">{project.title}</h3>
+            <h3 className="display mt-3 text-[30px] font-normal leading-[1.05] text-pretty">{project.title}</h3>
           </a>
-          <p className="mt-3 text-sm leading-6 text-umber">{project.description}</p>
-          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-cobalt">{project.tags.join(' · ')}</p>
+          <p className="mt-3 text-sm leading-6 text-pretty text-umber">{project.description}</p>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <li
+                key={tag}
+                className="border border-cobalt/25 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-cobalt transition-colors duration-300 group-hover:border-cobalt/50"
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
         </motion.article>
       ))}
     </div>
@@ -117,10 +145,13 @@ function PublicationsPanel() {
         target="_blank"
         rel="noreferrer"
         aria-label="Read Wired for Discipline on Amazon"
-        className="focus-ring group flex items-center justify-between gap-6 border-b border-ink/20 py-8"
+        className="focus-ring group flex items-center justify-between gap-6 border-b border-ink/20 py-8 transition-colors duration-300 hover:border-ochre"
       >
         <div>
-          <p className="eyebrow">Book &middot; Amazon &middot; Jan 2026</p>
+          <p className="eyebrow flex items-center gap-2">
+            <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />
+            Book &middot; Amazon &middot; Jan 2026
+          </p>
           <p className="display mt-3 text-[clamp(32px,4vw,52px)]">Wired for Discipline</p>
         </div>
         <ArrowUpRight className="h-6 w-6 shrink-0 text-umber transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" strokeWidth={1.25} />
@@ -132,28 +163,43 @@ function PublicationsPanel() {
 function StackPanel() {
   return (
     <div>
-      <p className="mb-6 max-w-3xl text-sm leading-6 text-umber">
+      <p className="mb-8 max-w-3xl text-sm leading-6 text-pretty text-umber">
         Classification, regression, time-series forecasting, feature engineering, and model evaluation. The grid runs data, then modeling, then visualization, then delivery. Notebooks also use Seaborn, XGBoost, Streamlit, and FastAPI.
       </p>
-      <div className="grid grid-cols-2 border-l border-t border-ink/20 sm:grid-cols-4 lg:grid-cols-7">
-      {stack.map(([name, slug]) => (
-        <div key={name} className="flex min-h-32 flex-col items-center justify-center gap-3 border-b border-r border-ink/20 p-4 text-center">
-          {slug ? (
-            <img
-              src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-original.svg`}
-              alt=""
-              width={30}
-              height={30}
-              className="h-[30px] w-[30px] opacity-80 grayscale sepia"
-            />
-          ) : (
-            <span className="display flex h-[30px] w-[30px] items-center justify-center text-xl text-umber" aria-hidden="true">
-              {name.slice(0, 2)}
-            </span>
-          )}
-          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-umber">{name}</span>
-        </div>
-      ))}
+      <div className="grid items-start gap-6 sm:grid-cols-2">
+        {skillGroups.map(({ label, icon: Icon, items }) => (
+          <section key={label} aria-label={label} className="border border-ink/15">
+            <h3 className="eyebrow flex items-center gap-2.5 border-b border-ink/15 px-4 py-3">
+              <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+              {label}
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3">
+              {items.map(([name, slug]) => (
+                <div
+                  key={name}
+                  className="group/skill flex min-h-28 flex-col items-center justify-center gap-3 border-b border-r border-ink/10 p-4 text-center transition-colors duration-300 hover:bg-paper"
+                >
+                  {slug ? (
+                    <img
+                      src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-original.svg`}
+                      alt=""
+                      width={30}
+                      height={30}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-[30px] w-[30px] opacity-80 grayscale sepia transition duration-300 group-hover/skill:opacity-100 group-hover/skill:grayscale-0 group-hover/skill:sepia-0"
+                    />
+                  ) : (
+                    <span className="display flex h-[30px] w-[30px] items-center justify-center text-xl text-umber" aria-hidden="true">
+                      {name.slice(0, 2)}
+                    </span>
+                  )}
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-umber">{name}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   )
@@ -185,8 +231,8 @@ export function Showcase() {
                 aria-selected={tab === id}
                 onClick={() => setTab(id)}
                 className={cn(
-                  'focus-ring border-b pb-2 text-[11px] font-semibold uppercase tracking-[0.24em] transition-colors',
-                  tab === id ? 'border-ink text-ink' : 'border-transparent text-umber/70 hover:text-ink',
+                  'focus-ring border-b pb-2 text-[11px] font-semibold uppercase tracking-[0.24em] transition-colors duration-300',
+                  tab === id ? 'border-ink text-ink' : 'border-transparent text-umber/70 hover:border-ochre/70 hover:text-ink',
                 )}
               >
                 {label}

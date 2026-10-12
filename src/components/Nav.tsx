@@ -61,7 +61,7 @@ export function Nav() {
               href={link.href}
               aria-current={activeSection === link.id ? 'page' : undefined}
               className={cn(
-                'focus-ring border-b border-transparent pb-1 text-[10px] font-semibold uppercase tracking-[0.24em] opacity-75 transition-opacity hover:opacity-100 sm:text-[11px]',
+                'focus-ring border-b border-transparent pb-1 text-[10px] font-semibold uppercase tracking-[0.24em] opacity-75 transition-[opacity,border-color] duration-300 hover:border-ochre/70 hover:opacity-100 sm:text-[11px]',
                 activeSection === link.id && 'border-ochre opacity-100',
               )}
             >

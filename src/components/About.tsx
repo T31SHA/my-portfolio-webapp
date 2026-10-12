@@ -20,18 +20,24 @@ export function About() {
           </h2>
         </Reveal>
         <Reveal delay={0.08} className="md:pt-14">
-          <p className="text-[17px] leading-[1.7] text-umber">
+          <p className="text-[17px] leading-[1.7] text-pretty text-umber">
             I am Sharahbill Mohamed Abdi, a data/ML engineer in Nairobi. I take a messy table through to a model, a holdout metric, and the decision that metric is supposed to change, across telecom, markets, climate, and agriculture.
           </p>
-          <ul className="mt-6 list-disc space-y-3 pl-5 text-[17px] leading-[1.7] text-umber">
-            <li>
-              Teach Python data analysis (Pandas, NumPy, and visualization) to multiple cohorts as a part-time Data Analysis Trainer at Trainify Institute of Technology, Nairobi (remote/hybrid). Cohorts taught: [X].
+          <ul className="mt-6 space-y-3 text-[17px] leading-[1.7] text-umber">
+            <li className="grid grid-cols-[0.7rem_1fr] gap-3">
+              <span className="mt-[0.55em] h-1.5 w-1.5 bg-ochre" aria-hidden="true" />
+              <span>
+                Teach Python data analysis (Pandas, NumPy, and visualization) to multiple cohorts as a part-time Data Analysis Trainer at Trainify Institute of Technology, Nairobi (remote/hybrid). Cohorts taught: [X].
+              </span>
             </li>
-            <li>
-              Take those cohorts from a raw dataset to an analysis they can explain: the cleaning, the chart, and the recommendation. Share of each cohort that finished an end-to-end project: [X%].
+            <li className="grid grid-cols-[0.7rem_1fr] gap-3">
+              <span className="mt-[0.55em] h-1.5 w-1.5 bg-ochre" aria-hidden="true" />
+              <span>
+                Take those cohorts from a raw dataset to an analysis they can explain: the cleaning, the chart, and the recommendation. Share of each cohort that finished an end-to-end project: [X%].
+              </span>
             </li>
           </ul>
-          <p className="mt-6 text-[17px] leading-[1.7] text-umber">
+          <p className="mt-6 text-[17px] leading-[1.7] text-pretty text-umber">
             Data Science at Moringa School (ongoing), after Data Visualization with Python (2025). ICDL certified. Best Problem Solver, Moringa School Bootcamp. Top 10% in a Kaggle Data Visualization Challenge.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
@@ -54,8 +60,8 @@ export function About() {
                 {String(index + 1).padStart(2, '0')} &middot; {label}
               </dt>
               <dd className="m-0">
-                <span className="display mt-4 block text-[clamp(64px,7vw,108px)] leading-none">{value}</span>
-                <span className="mt-3 block text-sm text-umber">{note}</span>
+                <span className="display mt-5 block text-[clamp(64px,7vw,108px)] tabular-nums leading-none">{value}</span>
+                <span className="mt-4 block text-sm leading-relaxed text-pretty text-umber">{note}</span>
               </dd>
             </div>
           ))}
