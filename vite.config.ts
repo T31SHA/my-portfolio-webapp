@@ -1,3 +1,4 @@
+import netlify from '@netlify/vite-plugin-tanstack-start'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
@@ -12,5 +13,11 @@ export default defineConfig({
       '@': new URL('./src', import.meta.url).pathname,
     },
   },
-  plugins: [tanstackStart(), tailwindcss(), react()],
+  plugins: [
+    tanstackStart(),
+    tailwindcss(),
+    react(),
+    // Netlify sets NETLIFY=true during its build. Keep other hosts on the default server output.
+    ...(process.env.NETLIFY ? [netlify()] : []),
+  ],
 })
