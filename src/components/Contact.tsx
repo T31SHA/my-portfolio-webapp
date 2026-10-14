@@ -1,126 +1,85 @@
-import { Send } from 'lucide-react'
-import { type FormEvent, useEffect, useRef, useState } from 'react'
-import { toast } from 'sonner'
+import { Download } from 'lucide-react'
+import { type FormEvent } from 'react'
 import { Reveal } from '@/components/Reveal'
+import { site } from '@/lib/site'
 
-type CommentEntry = {
-  name: string
-  text: string
-  time: string
-  pending?: boolean
-}
-
-const initialComments: CommentEntry[] = [
-  {
-    name: 'Placeholder Visitor',
-    text: 'Clean portfolio — the churn prediction write-up was a great read.',
-    time: '2 days ago',
-  },
+const channels = [
+  { label: 'Email', value: site.email, href: `mailto:${site.email}` },
+  { label: 'Phone', value: site.phone, href: site.phoneHref },
+  { label: 'LinkedIn', value: 'sharahbill-abdi', href: site.linkedin },
+  { label: 'GitHub', value: 'T31SHA', href: site.github },
 ]
 
 export function Contact() {
-  const [comments, setComments] = useState<CommentEntry[]>(initialComments)
-  const [guestName, setGuestName] = useState('')
-  const [guestComment, setGuestComment] = useState('')
-  const [cooldown, setCooldown] = useState(false)
-  const cooldownTimer = useRef<number | null>(null)
-
-  useEffect(() => {
-    return () => {
-      if (cooldownTimer.current) window.clearTimeout(cooldownTimer.current)
-    }
-  }, [])
-
-  const guardGuestbook = () => {
-    setCooldown(true)
-    if (cooldownTimer.current) window.clearTimeout(cooldownTimer.current)
-    cooldownTimer.current = window.setTimeout(() => setCooldown(false), 2000)
-  }
-
   const submitMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    toast.success("Message sent — I'll get back to you soon.")
-    event.currentTarget.reset()
-  }
-
-  const submitComment = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    if (cooldown || !guestComment.trim()) return
-    setComments((current) => [
-      { name: guestName.trim() || 'Anonymous', text: guestComment.trim(), time: 'just now', pending: true },
-      ...current,
-    ])
-    setGuestName('')
-    setGuestComment('')
-    toast.success('Comment submitted for review.')
+    const data = new FormData(event.currentTarget)
+    const name = String(data.get('name') ?? '').trim()
+    const email = String(data.get('email') ?? '').trim()
+    const message = String(data.get('message') ?? '').trim()
+    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`)
+    const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`)
+    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`
   }
 
   return (
-    <section id="contact" className="bg-ink px-[6vw] py-[16vh] text-paper">
+    <section id="contact" className="bg-ink px-[6vw] py-[12vh] text-paper">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <p className="eyebrow">04 &middot; Contact</p>
-          <h2 className="display mt-6 text-[clamp(44px,6.2vw,92px)]">
-            Got a dataset,
+          <p className="eyebrow">05 &middot; Contact</p>
+          <h2 className="display mt-6 text-[clamp(44px,6vw,88px)]">
+            Open to the
             <br />
-            <em className="text-ochre">or a question?</em>
+            <em className="text-ochre">right problem.</em>
           </h2>
-          <p className="mt-6 max-w-xl text-paper/70">Leave a message for work and collaborations, or sign the guestbook.</p>
+          <p className="mt-6 max-w-xl text-paper/70">
+            Data, machine learning and research roles, plus collaborations. Nairobi, and remote.
+          </p>
         </Reveal>
 
-        <div className="mt-[10vh] grid gap-16 md:grid-cols-2 md:gap-20">
-          <Reveal delay={0.08}>
-            <h3 className="display text-[34px] font-normal">Get in touch</h3>
-            <p className="mt-2 text-sm leading-6 text-paper/60">Direct line to my inbox.</p>
+        <div className="mt-14 grid gap-16 md:grid-cols-[1.1fr_0.9fr] md:gap-20">
+          <Reveal delay={0.06}>
+            <a href={`mailto:${site.email}`} className="focus-ring display block break-all text-[clamp(28px,3.4vw,46px)] leading-[1.15] hover:text-ochre">
+              {site.email}
+            </a>
+            <dl className="mt-10 border-t border-paper/15">
+              {channels.map((channel) => (
+                <div key={channel.label} className="grid grid-cols-[6.5rem_1fr] items-baseline gap-4 border-b border-paper/15 py-4">
+                  <dt className="eyebrow">{channel.label}</dt>
+                  <dd className="m-0">
+                    <a href={channel.href} className="focus-ring text-sm hover:text-ochre" {...(channel.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}>
+                      {channel.value}
+                    </a>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <a href={site.cvHref} download={site.cvFilename} className="btn-ink focus-ring mt-8 !bg-paper !text-ink hover:!bg-ochre">
+              <Download className="h-4 w-4" strokeWidth={1.5} />
+              Download CV
+            </a>
+          </Reveal>
+
+          <Reveal delay={0.12}>
+            <h3 className="display text-[34px] font-normal">Write from here</h3>
+            <p className="mt-2 text-sm leading-6 text-paper/60">Opens your email app with the note ready to send. Nothing is stored on this site.</p>
             <form className="mt-8 space-y-3" onSubmit={submitMessage}>
               <label className="block">
                 <span className="sr-only">Name</span>
-                <input required name="name" type="text" placeholder="Name" className="field-line" />
+                <input required name="name" type="text" placeholder="Name" autoComplete="name" className="field-line" />
               </label>
               <label className="block">
                 <span className="sr-only">Email</span>
-                <input required name="email" type="email" placeholder="Email" className="field-line" />
+                <input required name="email" type="email" placeholder="Email" autoComplete="email" className="field-line" />
               </label>
               <label className="block">
                 <span className="sr-only">Message</span>
-                <textarea required name="message" placeholder="Message" rows={4} className="field-line resize-none" />
+                <textarea required name="message" placeholder="What are you hiring for?" rows={4} className="field-line resize-none" />
               </label>
-              <button type="submit" className="btn-ink focus-ring mt-6 !bg-paper !text-ink hover:!bg-ochre">
-                <Send className="h-4 w-4" strokeWidth={1.5} />
-                Send message
+              <button type="submit" className="btn-line focus-ring mt-6">
+                Open email
               </button>
             </form>
-          </Reveal>
-
-          <Reveal delay={0.16}>
-            <h3 className="display text-[34px] font-normal">Guestbook</h3>
-            <p className="mt-2 text-sm leading-6 text-paper/60">New comments appear as pending until reviewed.</p>
-            <form className="mt-8 space-y-3" onSubmit={submitComment}>
-              <label className="block">
-                <span className="sr-only">Name</span>
-                <input value={guestName} onChange={(event) => { setGuestName(event.target.value); guardGuestbook() }} type="text" placeholder="Name (optional)" className="field-line" />
-              </label>
-              <label className="block">
-                <span className="sr-only">Comment</span>
-                <textarea required value={guestComment} onChange={(event) => { setGuestComment(event.target.value); guardGuestbook() }} placeholder="Leave a comment" rows={3} className="field-line resize-none" />
-              </label>
-              <button type="submit" disabled={cooldown} className="btn-line focus-ring mt-6 disabled:cursor-not-allowed disabled:opacity-50">
-                {cooldown ? 'Please wait…' : 'Post comment'}
-              </button>
-            </form>
-
-            <div className="mt-10 space-y-6 border-t border-paper/15 pt-6">
-              {comments.map((comment, index) => (
-                <article key={`${comment.time}-${index}`} className="border-l-2 border-ochre pl-4">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <p className="text-sm font-semibold">{comment.name}</p>
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-paper/50">{comment.time}</span>
-                    {comment.pending ? <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-ochre">Pending</span> : null}
-                  </div>
-                  <p className="mt-1.5 text-sm leading-6 text-paper/70">{comment.text}</p>
-                </article>
-              ))}
-            </div>
           </Reveal>
         </div>
       </div>

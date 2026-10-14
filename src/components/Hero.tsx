@@ -1,5 +1,7 @@
+import { Download } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { DataPlate } from '@/components/hero/Plates'
+import { site } from '@/lib/site'
 
 const TRACK = 3500
 const LERP = 0.14
@@ -29,7 +31,13 @@ const smoothstep = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t)
 }
 
-const tags = ['Python', 'TensorFlow', 'PyTorch', 'Pandas', 'scikit-learn']
+const tags = ['Python', 'XGBoost', 'TensorFlow', 'FastAPI', 'Streamlit']
+
+const proof = [
+  { value: '0.889', label: 'Flood ROC AUC' },
+  { value: '95.1%', label: 'Drought variance' },
+  { value: '8', label: 'Assignments' },
+]
 
 export function Hero() {
   const trackRef = useRef<HTMLElement>(null)
@@ -168,17 +176,32 @@ export function Hero() {
         />
         <div className="plate plate-bleed plate-scrim" />
 
-        <p className="hero-kicker eyebrow">Data Scientist &middot; Nairobi, Kenya</p>
+        <p className="hero-kicker eyebrow">Data &amp; Machine Learning Engineer &middot; Nairobi</p>
         <h1 className="hero-title">
-          Sharahbill<span className="sr-only"> Abdi, data scientist in Nairobi</span>
+          Sharahbill<span className="sr-only"> Mohamed Abdi, data and machine learning engineer in Nairobi</span>
         </h1>
         <div className="hero-lede">
-          <p className="text-[clamp(15px,1.35vw,19px)] leading-[1.55]">
-            Machine learning, forecasting and applied analytics: turning raw data into clear decisions, grounded in simplicity, scalability and impact.
+          <p className="eyebrow !text-cobalt">Sharahbill Mohamed Abdi &middot; Cortech Consulting Group</p>
+          <p className="mx-auto mt-3 max-w-xl text-[clamp(15px,1.3vw,18px)] leading-[1.5]">
+            I build forecasting and machine learning tools, and I run the research that shows what is working in development programmes.
           </p>
-          <p className="mt-3.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-umber">
-            Open to collaborations &middot; 1.2921&deg; S, 36.8219&deg; E
-          </p>
+          <dl className="hero-proof">
+            {proof.map((item) => (
+              <div key={item.label}>
+                <dt>{item.value}</dt>
+                <dd>{item.label}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <a href={site.cvHref} download={site.cvFilename} className="btn-ink focus-ring">
+              <Download className="h-4 w-4" strokeWidth={1.5} />
+              Download CV
+            </a>
+            <a href="#portfolio" className="btn-line focus-ring">
+              Selected work
+            </a>
+          </div>
         </div>
 
         <div className="plate plate-bleed plate-data">
@@ -203,9 +226,9 @@ export function Hero() {
 
         <div className="leaf leaf-r flex flex-col justify-center bg-paper p-[clamp(20px,3vw,44px)] text-ink shadow-[0_30px_60px_-28px_rgba(0,0,0,0.7)]">
           <p className="eyebrow !text-cobalt">01 &middot; Who I am</p>
-          <h2 className="display mt-4 text-[clamp(28px,3.4vw,50px)]">Raw data, read closely.</h2>
+          <h2 className="display mt-4 text-[clamp(28px,3.4vw,50px)]">Models, then the report.</h2>
           <p className="mt-5 text-[clamp(13px,1vw,15px)] leading-[1.65] text-umber">
-            I am a data-focused technologist with a strong interest in data science, machine learning, and building systems that solve real-world problems. I turn raw data into clear, actionable insight.
+            I lead MEAL and research at Cortech: frameworks, KoboToolbox surveys, Python analysis, and the write-up that goes back to the client. I also ship forecasting, classification and computer vision models as FastAPI and Streamlit apps.
           </p>
           <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.24em] text-ochre">{tags.join(' · ')}</p>
         </div>
@@ -213,19 +236,19 @@ export function Hero() {
         <aside className="hero-caption cap-1">
           <small className="eyebrow mb-2.5 block !text-cobalt">Based in &middot; Nairobi</small>
           <h2 className="display mb-2 text-[30px] font-normal leading-[1.05]">Where the data meets the ground.</h2>
-          <p className="text-sm leading-[1.55] text-umber">Floods, drought, markets, crops: problems I can stand next to, modelled with care.</p>
+          <p className="text-sm leading-[1.55] text-umber">Flood early warning, drought forecasts, and cassava diagnosis. Each one is a live app with a number attached.</p>
         </aside>
         <aside className="hero-caption cap-2">
           <small className="eyebrow mb-2.5 block !text-cobalt">The practice</small>
-          <h2 className="display mb-2 text-[30px] font-normal leading-[1.05]">Observe, model, forecast.</h2>
-          <p className="text-sm leading-[1.55] text-umber">Time-series, classification and decision support, built to be read by the people who use it.</p>
+          <h2 className="display mb-2 text-[30px] font-normal leading-[1.05]">Ship the model. Write the report.</h2>
+          <p className="text-sm leading-[1.55] text-umber">FastAPI and Streamlit for the systems. KoboToolbox and Python for the evaluations.</p>
         </aside>
         <div className="cap-3">
           <p className="eyebrow">In one line</p>
           <p className="display mt-5 text-[clamp(38px,6.4vw,104px)] text-paper">
-            &ldquo;Turning raw data into
+            Models you can open.
             <br />
-            decisions that matter.&rdquo;
+            Research a client can use.
           </p>
         </div>
 

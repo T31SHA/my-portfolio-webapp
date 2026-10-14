@@ -1,20 +1,26 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Toaster } from 'sonner'
 import { About } from '@/components/About'
 import { Contact } from '@/components/Contact'
+import { Experience } from '@/components/Experience'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { Nav } from '@/components/Nav'
-import { Preloader } from '@/components/Preloader'
 import { Showcase } from '@/components/Showcase'
 
 export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
-      { title: 'Sharahbill Abdi — Data Scientist in Nairobi' },
-      { name: 'description', content: 'Portfolio of Sharahbill Abdi, a Nairobi-based data scientist focused on machine learning, forecasting and applied analytics.' },
-      { property: 'og:title', content: 'Sharahbill Abdi — Data Scientist in Nairobi' },
-      { property: 'og:description', content: 'Machine learning, forecasting and applied analytics by Sharahbill Abdi.' },
+      { title: 'Sharahbill Abdi — Data & Machine Learning Engineer' },
+      {
+        name: 'description',
+        content:
+          'Sharahbill Mohamed Abdi builds forecasting, classification and computer vision systems, and leads MEAL and research at Cortech Consulting Group in Nairobi.',
+      },
+      { property: 'og:title', content: 'Sharahbill Abdi — Data & Machine Learning Engineer' },
+      {
+        property: 'og:description',
+        content: 'Live forecasting and machine learning systems, plus MEAL research for government, multilateral and NGO clients.',
+      },
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
@@ -25,16 +31,15 @@ export const Route = createFileRoute('/')({
 function IndexPage() {
   return (
     <div className="relative min-h-screen overflow-x-clip bg-paper text-ink">
-      <Preloader />
       <Nav />
       <main>
         <Hero />
         <About />
         <Showcase />
+        <Experience />
         <Contact />
       </main>
       <Footer />
-      <Toaster position="bottom-left" toastOptions={{ classNames: { toast: '!rounded-none !border-ink/15 !bg-paper !text-ink', title: '!text-ink', description: '!text-umber' } }} />
     </div>
   )
 }

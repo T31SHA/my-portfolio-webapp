@@ -1,11 +1,11 @@
 import { Download } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { site } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
 const links = [
-  { label: 'Home', href: '#home', id: 'home' },
-  { label: 'About', href: '#about', id: 'about' },
   { label: 'Work', href: '#portfolio', id: 'portfolio' },
+  { label: 'Experience', href: '#experience', id: 'experience' },
   { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
@@ -29,10 +29,10 @@ export function Nav() {
       },
       { rootMargin: '-45% 0px -50% 0px', threshold: [0, 0.1, 0.5] },
     )
-    links.forEach(({ id }) => {
+    for (const id of ['about', ...links.map((link) => link.id)]) {
       const section = document.getElementById(id)
       if (section) observer.observe(section)
-    })
+    }
 
     return () => {
       window.removeEventListener('scroll', onScroll)
@@ -49,19 +49,19 @@ export function Nav() {
       )}
       aria-label="Primary navigation"
     >
-      <div className="flex items-center justify-between gap-4 px-[4vw] py-5 sm:py-6">
-        <a href="#home" className="focus-ring flex shrink-0 items-baseline gap-3">
-          <b className="font-display text-[22px] font-medium uppercase tracking-[0.14em]">S. Abdi</b>
-          <span className="eyebrow hidden md:inline">Data Science</span>
+      <div className="flex items-center justify-between gap-3 px-[4vw] py-4 sm:py-5">
+        <a href="#home" className="focus-ring flex min-w-0 shrink items-baseline gap-3">
+          <b className="font-display text-[20px] font-medium uppercase tracking-[0.12em] sm:text-[22px] sm:tracking-[0.14em]">S. Abdi</b>
+          <span className="eyebrow hidden lg:inline">Data &amp; ML</span>
         </a>
-        <div className="flex items-center gap-[clamp(10px,2.4vw,34px)]">
+        <div className="flex items-center gap-[clamp(8px,1.6vw,28px)]">
           {links.map((link) => (
             <a
               key={link.id}
               href={link.href}
-              aria-current={activeSection === link.id ? 'page' : undefined}
+              aria-current={activeSection === link.id ? 'true' : undefined}
               className={cn(
-                'focus-ring border-b border-transparent pb-1 text-[10px] font-semibold uppercase tracking-[0.24em] opacity-75 transition-opacity hover:opacity-100 sm:text-[11px]',
+                'focus-ring border-b border-transparent pb-1 text-[10px] font-semibold uppercase tracking-[0.16em] opacity-75 transition-opacity hover:opacity-100 sm:tracking-[0.22em] sm:text-[11px]',
                 activeSection === link.id && 'border-ochre opacity-100',
               )}
             >
@@ -69,9 +69,9 @@ export function Nav() {
             </a>
           ))}
           <a
-            href="/assets/sharahbil-abdi-cv.pdf"
-            download
-            className="focus-ring hidden items-center gap-2 border border-current px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] transition-colors hover:bg-ochre hover:text-ink sm:inline-flex"
+            href={site.cvHref}
+            download={site.cvFilename}
+            className="focus-ring inline-flex items-center gap-1.5 border border-current px-2.5 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-ochre hover:text-ink sm:gap-2 sm:px-3.5 sm:tracking-[0.22em]"
           >
             <Download className="h-3.5 w-3.5" strokeWidth={1.5} />
             CV
