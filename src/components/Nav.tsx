@@ -49,19 +49,19 @@ export function Nav() {
       )}
       aria-label="Primary navigation"
     >
-      <div className="flex items-center justify-between gap-3 px-[4vw] py-4 sm:py-5">
-        <a href="#home" className="focus-ring flex min-w-0 shrink items-baseline gap-3">
-          <b className="font-display text-[20px] font-medium uppercase tracking-[0.12em] sm:text-[22px] sm:tracking-[0.14em]">S. Abdi</b>
+      <div className="flex items-center justify-between gap-2 px-3 py-3.5 min-[400px]:px-[4vw] min-[400px]:py-4 sm:py-5">
+        <a href="#home" className="focus-ring flex shrink-0 items-baseline gap-3 whitespace-nowrap">
+          <b className="font-display text-[18px] font-medium uppercase tracking-[0.08em] min-[400px]:text-[20px] min-[400px]:tracking-[0.12em] sm:text-[22px] sm:tracking-[0.14em]">S. Abdi</b>
           <span className="eyebrow hidden lg:inline">Data &amp; ML</span>
         </a>
-        <div className="flex items-center gap-[clamp(8px,1.6vw,28px)]">
+        <div className="flex shrink-0 items-center gap-2 whitespace-nowrap min-[400px]:gap-[clamp(8px,1.6vw,28px)]">
           {links.map((link) => (
             <a
               key={link.id}
               href={link.href}
               aria-current={activeSection === link.id ? 'true' : undefined}
               className={cn(
-                'focus-ring border-b border-transparent pb-1 text-[10px] font-semibold uppercase tracking-[0.16em] opacity-75 transition-opacity hover:opacity-100 sm:tracking-[0.22em] sm:text-[11px]',
+                'focus-ring border-b border-transparent pb-1 text-[9px] font-semibold uppercase tracking-[0.1em] opacity-75 transition-opacity hover:opacity-100 min-[400px]:text-[10px] min-[400px]:tracking-[0.16em] sm:tracking-[0.22em] sm:text-[11px]',
                 activeSection === link.id && 'border-ochre opacity-100',
               )}
             >
@@ -71,7 +71,7 @@ export function Nav() {
           <a
             href={site.cvHref}
             download={site.cvFilename}
-            className="focus-ring inline-flex items-center gap-1.5 border border-current px-2.5 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-ochre hover:text-ink sm:gap-2 sm:px-3.5 sm:tracking-[0.22em]"
+            className="focus-ring inline-flex shrink-0 items-center gap-1 border border-current px-2 py-1.5 text-[9px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-ochre hover:text-ink min-[400px]:gap-1.5 min-[400px]:px-2.5 min-[400px]:py-2 min-[400px]:text-[10px] min-[400px]:tracking-[0.16em] sm:gap-2 sm:px-3.5 sm:tracking-[0.22em]"
           >
             <Download className="h-3.5 w-3.5" strokeWidth={1.5} />
             CV

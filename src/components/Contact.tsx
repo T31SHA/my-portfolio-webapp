@@ -44,9 +44,9 @@ export function Contact() {
             </a>
             <dl className="mt-10 border-t border-paper/15">
               {channels.map((channel) => (
-                <div key={channel.label} className="grid grid-cols-[6.5rem_1fr] items-baseline gap-4 border-b border-paper/15 py-4">
+                <div key={channel.label} className="grid grid-cols-1 gap-1 border-b border-paper/15 py-4 min-[420px]:grid-cols-[6.5rem_1fr] min-[420px]:items-baseline min-[420px]:gap-4">
                   <dt className="eyebrow">{channel.label}</dt>
-                  <dd className="m-0">
+                  <dd className="m-0 min-w-0 break-words">
                     <a href={channel.href} className="focus-ring text-sm hover:text-ochre" {...(channel.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}>
                       {channel.value}
                     </a>

@@ -3,8 +3,14 @@ import { useEffect, useRef, useState } from 'react'
 import { DataPlate } from '@/components/hero/Plates'
 import { site } from '@/lib/site'
 
-const TRACK = 3500
+const BASE_TRACK = 3500
+const MOBILE_TRACK = 2000
 const LERP = 0.14
+const mobileHero = '(max-width: 720px)'
+
+const trackLength = () => (window.matchMedia(mobileHero).matches ? MOBILE_TRACK : BASE_TRACK)
+const toStory = (scrolled: number) => scrolled * (BASE_TRACK / trackLength())
+const toScroll = (storyPx: number) => storyPx * (trackLength() / BASE_TRACK)
 
 // [variable, start, end] in px of scroll into the track
 const BEATS = [
@@ -59,20 +65,24 @@ export function Hero() {
     let raf = 0
 
     const trackTop = () => track.getBoundingClientRect().top + window.scrollY
+    const syncTrack = () => {
+      track.style.height = `calc(${trackLength()}px + 100svh)`
+    }
     const readScroll = () => {
-      target = Math.min(TRACK, Math.max(0, window.scrollY - trackTop()))
+      target = Math.min(trackLength(), Math.max(0, window.scrollY - trackTop()))
     }
 
     const write = (p: number) => {
-      for (const [name, a, b] of BEATS) stage.style.setProperty(name, smoothstep(a, b, p).toFixed(4))
+      const story = toStory(p)
+      for (const [name, a, b] of BEATS) stage.style.setProperty(name, smoothstep(a, b, story).toFixed(4))
       for (const [name, a, b, c, d] of CAPTIONS) {
-        stage.style.setProperty(name, (smoothstep(a, b, p) * (1 - smoothstep(c, d, p))).toFixed(4))
+        stage.style.setProperty(name, (smoothstep(a, b, story) * (1 - smoothstep(c, d, story))).toFixed(4))
       }
       stage.style.setProperty('--mx', pCurrent.x.toFixed(4))
       stage.style.setProperty('--my', pCurrent.y.toFixed(4))
 
       let idx = 0
-      for (let i = 0; i < STOPS.length; i++) if (p >= STOPS[i] - 40) idx = i
+      for (let i = 0; i < STOPS.length; i++) if (story >= STOPS[i] - 40) idx = i
       if (idx !== lastStop) {
         lastStop = idx
         setActiveStop(idx)
@@ -107,6 +117,7 @@ export function Hero() {
     }
 
     const onScroll = () => {
+      syncTrack()
       readScroll()
       kick()
     }
@@ -125,7 +136,7 @@ export function Hero() {
       if (e.metaKey || e.ctrlKey || e.altKey) return
       if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? '')) return
       // Only while the hero is on screen, so the keys stay free elsewhere on the page.
-      if (window.scrollY - trackTop() > TRACK + window.innerHeight * 0.5) return
+      if (window.scrollY - trackTop() > trackLength() + window.innerHeight * 0.5) return
       const n = Number.parseInt(e.key, 10)
       if (n >= 1 && n <= STOPS.length) {
         e.preventDefault()
@@ -139,6 +150,7 @@ export function Hero() {
     document.addEventListener('pointerleave', onLeave)
     window.addEventListener('keydown', onKey)
 
+    syncTrack()
     readScroll()
     current = target
     write(current)
@@ -158,7 +170,7 @@ export function Hero() {
     if (!track) return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     window.scrollTo({
-      top: track.getBoundingClientRect().top + window.scrollY + STOPS[i],
+      top: track.getBoundingClientRect().top + window.scrollY + toScroll(STOPS[i]),
       behavior: reduced ? 'auto' : 'smooth',
     })
   }
@@ -176,7 +188,7 @@ export function Hero() {
         />
         <div className="plate plate-bleed plate-scrim" />
 
-        <p className="hero-kicker eyebrow">Data &amp; Machine Learning Engineer &middot; Nairobi</p>
+        <p className="hero-kicker eyebrow">Data &amp; ML Engineer &middot; Nairobi</p>
         <h1 className="hero-title">
           Sharahbill<span className="sr-only"> Mohamed Abdi, data and machine learning engineer in Nairobi</span>
         </h1>
