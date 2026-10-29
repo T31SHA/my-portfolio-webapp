@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sharahbill-t31sha.netlify.app/sitemap.xml

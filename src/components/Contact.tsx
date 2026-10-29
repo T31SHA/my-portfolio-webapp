@@ -1,86 +1,70 @@
-import { Download } from 'lucide-react'
-import { type FormEvent } from 'react'
-import { Reveal } from '@/components/Reveal'
+import { ArrowUpRight, Download } from 'lucide-react'
 import { site } from '@/lib/site'
 
 const channels = [
-  { label: 'Email', value: site.email, href: `mailto:${site.email}` },
   { label: 'Phone', value: site.phone, href: site.phoneHref },
   { label: 'LinkedIn', value: 'sharahbill-abdi', href: site.linkedin },
   { label: 'GitHub', value: 'T31SHA', href: site.github },
+  { label: 'Based in', value: site.location },
 ]
 
 export function Contact() {
-  const submitMessage = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    const name = String(data.get('name') ?? '').trim()
-    const email = String(data.get('email') ?? '').trim()
-    const message = String(data.get('message') ?? '').trim()
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`)
-    const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`)
-    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`
-  }
-
   return (
-    <section id="contact" className="bg-ink px-[6vw] py-[12vh] text-paper">
-      <div className="mx-auto max-w-6xl">
-        <Reveal>
-          <p className="eyebrow">05 &middot; Contact</p>
-          <h2 className="display mt-6 text-[clamp(44px,6vw,88px)]">
-            Open to the
-            <br />
-            <em className="text-ochre">right problem.</em>
+    <section id="contact" aria-labelledby="contact-title" className="bg-ink py-[clamp(4.5rem,11vw,8rem)] text-paper">
+      <div className="wrap">
+        <div data-reveal>
+          <p className="label text-signal">05 — Contact</p>
+          <h2 id="contact-title" className="display mt-6 max-w-[14ch] text-[clamp(2.75rem,7.5vw,6.25rem)]">
+            Have data and a decision to make?
           </h2>
-          <p className="mt-6 max-w-xl text-paper/70">
-            Data, machine learning and research roles, plus collaborations. Nairobi, and remote.
+          <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-mist">
+            Open to data, machine learning and research roles, and to collaborations. In Nairobi or remote.
           </p>
-        </Reveal>
+        </div>
 
-        <div className="mt-14 grid gap-16 md:grid-cols-[1.1fr_0.9fr] md:gap-20">
-          <Reveal delay={0.06}>
-            <a href={`mailto:${site.email}`} className="focus-ring display block break-all text-[clamp(28px,3.4vw,46px)] leading-[1.15] hover:text-ochre">
+        <div className="mt-14 grid gap-12 border-t border-rule-dark pt-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16" data-reveal>
+          <div>
+            <p className="label text-mist">Email</p>
+            <a
+              href={`mailto:${site.email}`}
+              className="mt-3 inline-block break-all font-display text-[clamp(1.75rem,4.4vw,3.25rem)] font-semibold tracking-tight underline decoration-signal decoration-2 underline-offset-[0.2em] transition-colors hover:text-signal"
+            >
               {site.email}
             </a>
-            <dl className="mt-10 border-t border-paper/15">
-              {channels.map((channel) => (
-                <div key={channel.label} className="grid grid-cols-1 gap-1 border-b border-paper/15 py-4 min-[420px]:grid-cols-[6.5rem_1fr] min-[420px]:items-baseline min-[420px]:gap-4">
-                  <dt className="eyebrow">{channel.label}</dt>
-                  <dd className="m-0 min-w-0 break-words">
-                    <a href={channel.href} className="focus-ring text-sm hover:text-ochre" {...(channel.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}>
-                      {channel.value}
-                    </a>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <a href={site.cvHref} download={site.cvFilename} className="btn-ink focus-ring mt-8 !bg-paper !text-ink hover:!bg-ochre">
-              <Download className="h-4 w-4" strokeWidth={1.5} />
-              Download CV
-            </a>
-          </Reveal>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <a href={site.cvHref} download={site.cvFilename} className="btn btn-signal">
+                <Download className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
+                Download CV <span className="font-normal">PDF · {site.cvSize}</span>
+              </a>
+            </div>
+          </div>
 
-          <Reveal delay={0.12}>
-            <h3 className="display text-[34px] font-normal">Write from here</h3>
-            <p className="mt-2 text-sm leading-6 text-paper/60">Opens your email app with the note ready to send. Nothing is stored on this site.</p>
-            <form className="mt-8 space-y-3" onSubmit={submitMessage}>
-              <label className="block">
-                <span className="sr-only">Name</span>
-                <input required name="name" type="text" placeholder="Name" autoComplete="name" className="field-line" />
-              </label>
-              <label className="block">
-                <span className="sr-only">Email</span>
-                <input required name="email" type="email" placeholder="Email" autoComplete="email" className="field-line" />
-              </label>
-              <label className="block">
-                <span className="sr-only">Message</span>
-                <textarea required name="message" placeholder="What are you hiring for?" rows={4} className="field-line resize-none" />
-              </label>
-              <button type="submit" className="btn-line focus-ring mt-6">
-                Open email
-              </button>
-            </form>
-          </Reveal>
+          <dl className="grid content-start">
+            {channels.map((channel) => (
+              <div key={channel.label} className="grid grid-cols-[6.5rem_1fr] items-baseline gap-4 border-b border-rule-dark py-4 first:pt-0">
+                <dt className="label text-mist">{channel.label}</dt>
+                <dd className="m-0 min-w-0 break-words">
+                  {channel.href ? (
+                    <a
+                      href={channel.href}
+                      className="link-arrow"
+                      {...(channel.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    >
+                      {channel.value}
+                      {channel.href.startsWith('http') ? (
+                        <>
+                          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                          <span className="sr-only">(opens in a new tab)</span>
+                        </>
+                      ) : null}
+                    </a>
+                  ) : (
+                    channel.value
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
     </section>

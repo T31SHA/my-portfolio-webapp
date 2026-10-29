@@ -4,3 +4,22 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# The CV used to live here. Old links keep working and get the current CV.
+[[redirects]]
+  from = "/assets/sharahbil-abdi-cv.pdf"
+  to = "/assets/Sharahbill_Abdi_CV.pdf"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/assets/Sharahbill_Abdi_CV.pdf"
+  [headers.values]
+    Content-Disposition = "inline; filename=\"Sharahbill_Abdi_CV.pdf\""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
