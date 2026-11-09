@@ -1,5 +1,5 @@
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
-import displayFont from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url'
+import displayFont from '@fontsource/anton/files/anton-latin-400-normal.woff2?url'
 import { book, site } from '@/lib/site'
 import '../styles.css'
 
@@ -41,7 +41,7 @@ export const Route = createRootRoute({
       { title: site.title },
       { name: 'description', content: site.description },
       { name: 'author', content: site.name },
-      { name: 'theme-color', content: '#0f1e33' },
+      { name: 'theme-color', content: '#1e1a17' },
       { property: 'og:type', content: 'profile' },
       { property: 'og:site_name', content: site.name },
       { property: 'og:title', content: site.title },
@@ -50,7 +50,7 @@ export const Route = createRootRoute({
       { property: 'og:image', content: ogImage },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
-      { property: 'og:image:alt', content: 'Sharahbill Mohamed Abdi, Data & Machine Learning Engineer, MEAL & Research, Nairobi' },
+      { property: 'og:image:alt', content: 'Sharahbill Mohamed Abdi, Data Analyst and ML Engineer, MEAL and Research, Nairobi' },
       { property: 'og:locale', content: 'en_KE' },
       { property: 'profile:first_name', content: 'Sharahbill' },
       { property: 'profile:last_name', content: 'Abdi' },

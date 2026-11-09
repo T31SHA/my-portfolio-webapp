@@ -29,7 +29,7 @@ export function Book() {
         </div>
 
         <div data-reveal>
-          <p className="label text-signal">03 — Writing</p>
+          <p className="label text-signal">03: Writing</p>
           <h2 id="book-title" className="display mt-6 text-[clamp(2.75rem,6.5vw,5.25rem)]">
             {book.title}
           </h2>

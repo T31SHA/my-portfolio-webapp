@@ -2,7 +2,7 @@ export const site = {
   url: 'https://sharahbill-t31sha.netlify.app',
   name: 'Sharahbill Mohamed Abdi',
   shortName: 'Sharahbill Abdi',
-  role: 'Data & Machine Learning Engineer',
+  role: 'Data Analyst & ML Engineer',
   focus: 'MEAL & Research',
   email: 'asharahbiil@gmail.com',
   phone: '+254 729 963 218',
@@ -13,9 +13,9 @@ export const site = {
   cvHref: '/assets/Sharahbill_Abdi_CV.pdf',
   cvFilename: 'Sharahbill_Abdi_CV.pdf',
   cvSize: '230 KB',
-  title: 'Sharahbill Mohamed Abdi — Data & Machine Learning Engineer, Nairobi',
+  title: 'Sharahbill Mohamed Abdi | Data Analyst & ML Engineer',
   description:
-    'Data and machine learning engineer in Nairobi. Live forecasting, classification and computer vision systems, and MEAL research for the World Bank, IGAD, IOM and the African Union.',
+    'Sharahbill Mohamed Abdi is a data analyst and machine learning engineer in Nairobi, building forecasting, classification and computer vision systems and leading MEAL research.',
 }
 
 export const book = {

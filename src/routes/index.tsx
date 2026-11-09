@@ -1,11 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Background } from '@/components/Background'
-import { Book } from '@/components/Book'
 import { Contact } from '@/components/Contact'
+import { About } from '@/components/About'
+import { ExperienceSkills } from '@/components/ExperienceSkills'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { Nav } from '@/components/Nav'
-import { Research } from '@/components/Research'
+import { Recognition } from '@/components/Recognition'
+import { Services } from '@/components/Services'
 import { Work } from '@/components/Work'
 import { useReveal } from '@/lib/useReveal'
 
@@ -24,10 +25,11 @@ function IndexPage() {
       <Nav />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
+        <About />
+        <Services />
+        <ExperienceSkills />
         <Work />
-        <Research />
-        <Book />
-        <Background />
+        <Recognition />
         <Contact />
       </main>
       <Footer />

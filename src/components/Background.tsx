@@ -5,7 +5,7 @@ export function Background() {
     <section id="background" aria-labelledby="background-title" className="bg-paper py-[clamp(4.5rem,11vw,8rem)]">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16" data-reveal>
-          <p className="label text-signal-ink">04 — Background</p>
+          <p className="label text-signal-ink">04: Background</p>
           <h2 id="background-title" className="display text-[clamp(2.75rem,6.5vw,5.25rem)]">
             Mathematics, code and the field.
           </h2>

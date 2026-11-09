@@ -7,7 +7,7 @@ export function Research() {
     <section id="research" aria-labelledby="research-title" className="bg-paper-2 py-[clamp(4.5rem,11vw,8rem)]">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16" data-reveal>
-          <p className="label text-signal-ink">02 — MEAL &amp; research</p>
+          <p className="label text-signal-ink">02: MEAL &amp; research</p>
           <div>
             <h2 id="research-title" className="display text-[clamp(2.75rem,6.5vw,5.25rem)]">
               Evidence for programmes that have to deliver.

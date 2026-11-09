@@ -1,71 +1,40 @@
-import { ArrowUpRight, Download } from 'lucide-react'
+import { ArrowUpRight, Github, Globe2, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
 import { site } from '@/lib/site'
+import { Starburst, WireGlobe } from '@/components/EditorialMarks'
 
 const channels = [
-  { label: 'Phone', value: site.phone, href: site.phoneHref },
-  { label: 'LinkedIn', value: 'sharahbill-abdi', href: site.linkedin },
-  { label: 'GitHub', value: 'T31SHA', href: site.github },
-  { label: 'Based in', value: site.location },
+  { label: 'EMAIL', value: site.email, href: `mailto:${site.email}`, icon: Mail },
+  { label: 'PHONE', value: site.phone, href: site.phoneHref, icon: Phone },
+  { label: 'BASED IN', value: site.location, icon: MapPin },
+  { label: 'GITHUB', value: 'github.com/T31SHA', href: site.github, icon: Github },
+  { label: 'LINKEDIN', value: 'linkedin.com/in/sharahbill-abdi-6b3463362', href: site.linkedin, icon: Linkedin },
+  { label: 'WEB', value: 'sharahbill-t31sha.netlify.app', href: site.url, icon: Globe2 },
 ]
 
 export function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="bg-ink py-[clamp(4.5rem,11vw,8rem)] text-paper">
-      <div className="wrap">
-        <div data-reveal>
-          <p className="label text-signal">05 — Contact</p>
-          <h2 id="contact-title" className="display mt-6 max-w-[14ch] text-[clamp(2.75rem,7.5vw,6.25rem)]">
-            Have data and a decision to make?
-          </h2>
-          <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-mist">
-            Open to data, machine learning and research roles, and to collaborations. In Nairobi or remote.
-          </p>
+    <section id="contact" className="section-wrap contact-section" aria-labelledby="contact-title">
+      <div className="contact-panel">
+        <Starburst className="contact-starburst" color="var(--cream)" />
+        <WireGlobe className="contact-globe" />
+        <div className="contact-main" data-reveal>
+          <p className="contact-eyebrow">HAVE DATA AND A DECISION TO MAKE?</p>
+          <h2 id="contact-title" className="display contact-title">LET&apos;S BUILD<br /><span>SOMETHING USEFUL</span></h2>
+          <p>Have data and a decision to make? Open to data, machine learning and research roles, and to collaborations. In Nairobi or remote.</p>
+          <a href={`mailto:${site.email}`} className="button button-paper">START A CONVERSATION <span className="button-arrow"><ArrowUpRight aria-hidden="true" /></span></a>
         </div>
-
-        <div className="mt-14 grid gap-12 border-t border-rule-dark pt-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16" data-reveal>
-          <div>
-            <p className="label text-mist">Email</p>
-            <a
-              href={`mailto:${site.email}`}
-              className="mt-3 inline-block break-all font-display text-[clamp(1.75rem,4.4vw,3.25rem)] font-semibold tracking-tight underline decoration-signal decoration-2 underline-offset-[0.2em] transition-colors hover:text-signal"
-            >
-              {site.email}
-            </a>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <a href={site.cvHref} download={site.cvFilename} className="btn btn-signal">
-                <Download className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
-                Download CV <span className="font-normal">PDF · {site.cvSize}</span>
-              </a>
+        <dl className="contact-list" data-reveal>
+          {channels.slice(0, 6).map((channel) => (
+            <div key={channel.label}>
+              <dt><span className="contact-icon"><channel.icon aria-hidden="true" /></span><span>{channel.label}</span></dt>
+              <dd>{channel.href ? (
+                <a href={channel.href} target={channel.href.startsWith('http') ? '_blank' : undefined} rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                  {channel.value}{channel.href.startsWith('http') ? <ArrowUpRight aria-hidden="true" /> : null}
+                </a>
+              ) : channel.value}</dd>
             </div>
-          </div>
-
-          <dl className="grid content-start">
-            {channels.map((channel) => (
-              <div key={channel.label} className="grid grid-cols-[6.5rem_1fr] items-baseline gap-4 border-b border-rule-dark py-4 first:pt-0">
-                <dt className="label text-mist">{channel.label}</dt>
-                <dd className="m-0 min-w-0 break-words">
-                  {channel.href ? (
-                    <a
-                      href={channel.href}
-                      className="link-arrow"
-                      {...(channel.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    >
-                      {channel.value}
-                      {channel.href.startsWith('http') ? (
-                        <>
-                          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                          <span className="sr-only">(opens in a new tab)</span>
-                        </>
-                      ) : null}
-                    </a>
-                  ) : (
-                    channel.value
-                  )}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+          ))}
+        </dl>
       </div>
     </section>
   )
