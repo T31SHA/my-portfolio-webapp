@@ -44,7 +44,7 @@ export const caseStudies: CaseStudy[] = [
       { label: 'Recall', value: 0.8, display: '0.80' },
     ],
     stack: ['Python', 'GeoPandas', 'OSMnx', 'XGBoost', 'FastAPI', 'Streamlit', 'Folium', 'Docker', 'GitHub Actions'],
-    live: 'https://nairobi-flood-guard.streamlit.app/',
+    live: 'https://nairobi-flood-guard-ai.netlify.app/',
     code: 'https://github.com/T31SHA/Nairobi_Flood_Guard-AI',
   },
   {
