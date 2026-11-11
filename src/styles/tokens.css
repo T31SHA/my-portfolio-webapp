@@ -5,40 +5,20 @@
 
 :root {
   --cream: #f3eadb;
-  --cream-2: #efe4d2;
-  --paper: #faf5ec;
+  --paper: #fbf6ec;
   --charcoal: #1e1a17;
-  --ink-soft: #4a433d;
+  --muted: #6e6358;
   --rust: #c4552d;
   --rust-deep: #a8441f;
   --olive: #6b6a3e;
-  --olive-deep: #55542f;
-  --sand: #e7c9a0;
-  --line: rgb(30 26 23 / 18%);
-  --line-dark: rgb(243 234 219 / 16%);
-
-  --radius-sm: 10px;
-  --radius-md: 18px;
-  --radius-lg: 28px;
-  --radius-pill: 999px;
-
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-12: 48px;
-  --space-16: 64px;
-  --space-24: 96px;
-  --space-32: 128px;
-
-  --container: 1280px;
-  --gutter: 24px;
-  --shadow: none;
+  --sand: #e3b98a;
+  --line: #d6c8b2;
+  --hairline: rgb(30 26 23 / 35%);
   --font-display: "Anton", Impact, "Arial Narrow", sans-serif;
   --font-sans: "DM Sans Variable", "DM Sans", Arial, sans-serif;
-  --font-mono: "DM Mono", "Courier New", monospace;
+  --font-mono: "DM Mono", ui-monospace, monospace;
   --font-hand: "Caveat Variable", "Caveat", cursive;
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --container: 1360px;
+  --gutter: 40px;
+  --section-gap: 36px;
 }

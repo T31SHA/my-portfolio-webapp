@@ -1,7 +1,6 @@
-import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { site } from '@/lib/site'
-import { Starburst } from '@/components/EditorialMarks'
+import { MaskIcon } from '@/components/EditorialMarks'
 
 const links = [
   { label: 'About', id: 'about' },
@@ -14,14 +13,15 @@ const links = [
 
 export function Nav() {
   const [open, setOpen] = useState(false)
-  const [active, setActive] = useState('')
+  const [active, setActive] = useState('about')
   const menuRef = useRef<HTMLDivElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const wasOpen = useRef(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id)
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+      if (visible?.target.id) setActive(visible.target.id)
     }, { rootMargin: '-38% 0px -54% 0px' })
     for (const link of links) {
       const section = document.getElementById(link.id)
@@ -55,7 +55,7 @@ export function Nav() {
   useEffect(() => {
     const trapFocus = (event: KeyboardEvent) => {
       if (!open || event.key !== 'Tab' || !menuRef.current) return
-      const items = [...menuRef.current.querySelectorAll<HTMLElement>('a[href]')]
+      const items = [...menuRef.current.querySelectorAll<HTMLElement>('a[href], button')]
       const first = items[0]
       const last = items[items.length - 1]
       if (event.shiftKey && document.activeElement === first) {
@@ -74,8 +74,8 @@ export function Nav() {
     <header className="nav-wrap">
       <nav className="nav-bar" aria-label="Primary navigation">
         <a href="#top" className="wordmark" aria-label="Sharahbill Abdi, back to top" onClick={() => setOpen(false)}>
-          <Starburst className="wordmark-mark" color="var(--rust)" />
-          <span>SHARAHBILL<br />ABDI</span>
+          <span className="wordmark-mark"><img src="/design/starburst.svg" width={30} height={30} alt="" /></span>
+          <span className="wordmark-name"><span>SHARAHBILL</span><span>ABDI</span></span>
         </a>
         <ul className="nav-links">
           {links.map((link) => (
@@ -86,7 +86,10 @@ export function Nav() {
             </li>
           ))}
         </ul>
-        <a className="nav-cta" href="#contact">LET&apos;S TALK <ArrowUpRight aria-hidden="true" /></a>
+        <a className="button button-primary nav-cta" href="#contact">
+          Let&apos;s talk
+          <span className="button-badge"><img src="/design/arrow-right.svg" width={16} height={16} alt="" /></span>
+        </a>
         <button
           type="button"
           ref={toggleRef}
@@ -96,7 +99,11 @@ export function Nav() {
           aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
           onClick={() => setOpen((value) => !value)}
         >
-          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          {open ? (
+            <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+          ) : (
+            <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+          )}
         </button>
       </nav>
       <div id="mobile-menu" ref={menuRef} className={`mobile-menu${open ? ' is-open' : ''}`} aria-hidden={!open} aria-modal={open ? 'true' : undefined} role="dialog" aria-label="Navigation menu">
@@ -105,12 +112,16 @@ export function Nav() {
             {links.map((link) => (
               <li key={link.id}>
                 <a href={`#${link.id}`} onClick={() => setOpen(false)} aria-current={active === link.id ? 'location' : undefined}>
-                  <span>{link.label}</span><ArrowUpRight aria-hidden="true" />
+                  <span>{link.label}</span>
+                  <MaskIcon src="/design/arrow-right.svg" size={16} />
                 </a>
               </li>
             ))}
           </ul>
-          <a href={site.cvHref} download={site.cvFilename} className="mobile-cv" onClick={() => setOpen(false)}>View CV <ArrowUpRight aria-hidden="true" /></a>
+          <a href={site.cvHref} download={site.cvFilename} className="button button-primary mobile-cv" onClick={() => setOpen(false)}>
+            View CV
+            <span className="button-badge"><img src="/design/arrow-right.svg" width={16} height={16} alt="" /></span>
+          </a>
         </nav>
       </div>
     </header>

@@ -1,0 +1,54 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="220" height="210" viewBox="0 0 220 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Grid Card">
+<g clip-path="url(#clip0_0_46)">
+<rect width="220" height="210" rx="28" fill="#1E1A17"/>
+<g id="Grid Landscape" clip-path="url(#clip1_0_46)">
+<path id="Vector" opacity="0.8" d="M50 92.4L-258 220" stroke="#E3B98A"/>
+<path id="Vector_2" opacity="0.8" d="M56 92.4L-221.2 220" stroke="#E3B98A"/>
+<path id="Vector_3" opacity="0.8" d="M62 92.4L-184.4 220" stroke="#E3B98A"/>
+<path id="Vector_4" opacity="0.8" d="M68 92.4L-147.6 220" stroke="#E3B98A"/>
+<path id="Vector_5" opacity="0.8" d="M74 92.4L-110.8 220" stroke="#E3B98A"/>
+<path id="Vector_6" opacity="0.8" d="M80 92.4L-74 220" stroke="#E3B98A"/>
+<path id="Vector_7" opacity="0.8" d="M86 92.4L-37.2 220" stroke="#E3B98A"/>
+<path id="Vector_8" opacity="0.8" d="M92 92.4L-0.4 220" stroke="#E3B98A"/>
+<path id="Vector_9" opacity="0.8" d="M98 92.4L36.4 220" stroke="#E3B98A"/>
+<path id="Vector_10" opacity="0.8" d="M104 92.4L73.2 220" stroke="#E3B98A"/>
+<path id="Vector_11" opacity="0.8" d="M110 92.4V220" stroke="#E3B98A"/>
+<path id="Vector_12" opacity="0.8" d="M116 92.4L146.8 220" stroke="#E3B98A"/>
+<path id="Vector_13" opacity="0.8" d="M122 92.4L183.6 220" stroke="#E3B98A"/>
+<path id="Vector_14" opacity="0.8" d="M128 92.4L220.4 220" stroke="#E3B98A"/>
+<path id="Vector_15" opacity="0.8" d="M134 92.4L257.2 220" stroke="#E3B98A"/>
+<path id="Vector_16" opacity="0.8" d="M140 92.4L294 220" stroke="#E3B98A"/>
+<path id="Vector_17" opacity="0.8" d="M146 92.4L330.8 220" stroke="#E3B98A"/>
+<path id="Vector_18" opacity="0.8" d="M152 92.4L367.6 220" stroke="#E3B98A"/>
+<path id="Vector_19" opacity="0.8" d="M158 92.4L404.4 220" stroke="#E3B98A"/>
+<path id="Vector_20" opacity="0.8" d="M164 92.4L441.2 220" stroke="#E3B98A"/>
+<path id="Vector_21" opacity="0.8" d="M170 92.4L478 220" stroke="#E3B98A"/>
+<path id="Vector_22" opacity="0.8" d="M-5 94.4H225" stroke="#E3B98A"/>
+<path id="Vector_23" opacity="0.8" d="M-5 100.4H225" stroke="#E3B98A"/>
+<path id="Vector_24" opacity="0.8" d="M-5 110.3H225" stroke="#E3B98A"/>
+<path id="Vector_25" opacity="0.8" d="M-5 124.3H225" stroke="#E3B98A"/>
+<path id="Vector_26" opacity="0.8" d="M-5 142.2H225" stroke="#E3B98A"/>
+<path id="Vector_27" opacity="0.8" d="M-5 164.2H225" stroke="#E3B98A"/>
+<path id="Vector_28" opacity="0.8" d="M-5 190.1H225" stroke="#E3B98A"/>
+<path id="Vector_29" opacity="0.8" d="M-5 220H225" stroke="#E3B98A"/>
+<path id="Vector_30" d="M-5 92.4L0.8 92.3L6.5 92.1L12.2 91.7L18 91L23.8 90L29.5 88.7L35.2 87.5L41 86.6L46.8 86.3L52.5 86.7L58.2 87.6L64 88.6L69.8 89.5L75.5 89.8L81.2 89.7L87 89L92.8 88L98.5 86.6L104.2 85.1L110 83.4L115.8 81.8L121.5 80.4L127.2 79.2L133 78.6L138.8 78.4L144.5 78.8L150.2 79.6L156 80.9L161.8 82.4L167.5 84.1L173.2 85.7L179 87.2L184.8 88.6L190.5 89.7L196.2 90.5L202 91.2L207.8 91.6L213.5 91.9L219.2 92.1L225 92.2" stroke="#E3B98A"/>
+</g>
+<circle id="Sun" cx="142" cy="62" r="22" fill="#C4552D"/>
+<g id="Sparkle" clip-path="url(#clip2_0_46)">
+<path id="Vector_31" d="M51 34C51.6417 40.6 55.4 44.3583 62 45C55.4 45.6417 51.6417 49.4 51 56C50.3583 49.4 46.6 45.6417 40 45C46.6 44.3583 50.3583 40.6 51 34Z" fill="#F3EADB"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_46">
+<rect width="220" height="210" rx="28" fill="white"/>
+</clipPath>
+<clipPath id="clip1_0_46">
+<rect width="230" height="220" fill="white" transform="translate(-5)"/>
+</clipPath>
+<clipPath id="clip2_0_46">
+<rect width="22" height="22" fill="white" transform="translate(40 34)"/>
+</clipPath>
+</defs>
+</svg>
