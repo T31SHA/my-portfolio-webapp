@@ -1,70 +1,89 @@
-import { ArrowUpRight } from 'lucide-react'
-import { education, experience, languages, skills } from '@/lib/content'
-import { RetroTV, Starburst } from '@/components/EditorialMarks'
+import { education, skills } from '@/lib/content'
 
 const skillGroups = [
   { label: 'Programming & Data', chips: ['Python', 'Pandas', 'NumPy', 'SQL', 'Git', 'Jupyter'] },
-  { label: 'Machine Learning', chips: ['scikit-learn', 'XGBoost', 'Optuna', 'SHAP', 'Forecasting'] },
-  { label: 'Deep Learning', chips: ['TensorFlow', 'Keras', 'Computer Vision', 'TFLite'] },
-  { label: 'Deployment', chips: ['FastAPI', 'Streamlit', 'Render', 'Docker', 'pytest'] },
+  { label: 'Machine Learning', chips: ['scikit-learn', 'XGBoost', 'Optuna', 'SHAP', 'Time Series Forecasting'] },
+  { label: 'Deep Learning', chips: ['TensorFlow', 'Keras', 'TFLite'] },
+  { label: 'Deployment', chips: ['FastAPI', 'Streamlit', 'Docker', 'GitHub Actions', 'pytest'] },
   { label: 'Geospatial', chips: ['GeoPandas', 'OSMnx', 'Folium', 'Leaflet'] },
-  { label: 'Research & MEAL', chips: ['KoboToolbox', 'Survey Design', 'Evaluation', 'Reporting'] },
+  { label: 'Research & MEAL', chips: ['MEAL Frameworks', 'Survey Design', 'KoboToolbox'] },
+]
+
+const jobs = [
+  {
+    date: '2025 to present',
+    role: 'MEAL Officer / Research',
+    org: 'Cortech Consulting Group, Nairobi',
+    detail: 'Led MEAL and research on 8 assignments across 2025 and 2026 for government, multilateral and NGO clients. Designed MEAL frameworks, deployed KoboToolbox survey tools and wrote the evaluation and research reports.',
+  },
+  {
+    date: 'Part-time / remote or hybrid',
+    role: 'Data Analysis Trainer',
+    org: 'Trainify Institute of Technology, Nairobi',
+    detail: 'Taught Python data analysis (Pandas, NumPy, visualisation) to multiple cohorts and mentored students through end-to-end projects, from raw data to presented insights.',
+  },
+  {
+    date: 'Apr 2026',
+    role: 'Data Science',
+    org: 'Moringa School',
+    detail: 'Plus Data Visualization with Python (Moringa School, 2025) and a BSc in Mathematics and Computing in progress at The Open University of Kenya.',
+  },
 ]
 
 export function ExperienceSkills() {
   return (
     <section id="experience" className="section-wrap dark-section experience-section" aria-labelledby="experience-title">
-      <span id="background" className="anchor-alias" aria-hidden="true" />
       <h2 id="experience-title" className="sr-only">Skills and experience</h2>
       <div className="experience-grid">
-        <div id="skills" className="skills-column" data-reveal>
-          <h3 className="subsection-label">Skills &amp; Toolkit</h3>
+        <div id="skills" className="skills-column">
+          <h3 className="subsection-label mono">Skills &amp; toolkit</h3>
           {skillGroups.map((group) => (
             <div className="skill-group" key={group.label}>
-              <div className="skill-group-head"><h4>{group.label}</h4><span className="skill-dots" aria-hidden="true"><i /><i /><i /><i /><i /></span></div>
+              <div className="skill-group-head">
+                <h4>{group.label}</h4>
+                <span className="skill-dots" aria-hidden="true"><i /><i /><i /><i /><i /></span>
+              </div>
               <ul>{group.chips.map((chip) => <li key={chip}>{chip}</li>)}</ul>
             </div>
           ))}
-          <details className="dark-details">
-            <summary>Full toolkit notes <ArrowUpRight aria-hidden="true" /></summary>
+          <details className="disclose">
+            <summary>Full toolkit notes</summary>
             <dl>
               {skills.map(([area, detail]) => <div key={area}><dt>{area}</dt><dd>{detail}</dd></div>)}
             </dl>
           </details>
         </div>
 
-        <div className="timeline-column" data-reveal>
-          <h3 className="subsection-label">Experience &amp; Education</h3>
+        <div className="panel-rule" aria-hidden="true" />
+
+        <div className="timeline-column">
+          <h3 className="subsection-label mono">Experience &amp; education</h3>
           <ol className="timeline">
-            {experience.map((job) => (
-              <li key={job.org}>
-                <p className="timeline-date">{job.period || 'PART-TIME'}</p>
-                <h4 className="timeline-role display">{job.role.replace(' (Part-time)', '')}</h4>
-                <p className="timeline-org">{job.org} · {job.place}</p>
-                <p>{job.detail}</p>
+            {jobs.map((job) => (
+              <li key={job.role}>
+                <span className="rail" aria-hidden="true"><i /></span>
+                <div className="job">
+                  <p className="job-date mono">{job.date}</p>
+                  <h4 className="job-role display">{job.role}</h4>
+                  <p className="job-org">{job.org}</p>
+                  <p>{job.detail}</p>
+                </div>
               </li>
             ))}
-            <li>
-              <p className="timeline-date">APR 2026</p>
-              <h4 className="timeline-role display">Data Science</h4>
-              <p className="timeline-org">Moringa School</p>
-              <p>Data science training at Moringa School.</p>
-            </li>
           </ol>
-          <details id="education" className="dark-details education-details">
-            <summary>Education and certificates <ArrowUpRight aria-hidden="true" /></summary>
+          <details id="education" className="disclose">
+            <summary>Education and certificates</summary>
             <ul>
-              {education.map(([credential, institution]) => <li key={credential}><strong>{credential}</strong><span>{institution}</span></li>)}
-              <li><strong>ICDL</strong><span>Certification</span></li>
+              {education.map(([credential, institution]) => <li key={credential}><strong>{credential}</strong> {institution}</li>)}
+              <li><strong>ICDL</strong> Certification</li>
             </ul>
-            <p><strong>Languages:</strong> {languages}</p>
           </details>
         </div>
 
-        <div className="tv-column" data-reveal>
-          <div className="tv-frame"><RetroTV className="retro-tv" /></div>
+        <div className="tv-column">
+          <div className="tv-frame"><img src="/design/tv.svg" width={240} height={230} alt="Retro television displaying a wireframe globe" /></div>
           <p className="language-note">Somali / English / Kiswahili</p>
-          <Starburst className="tv-sparkle" color="var(--rust)" />
+          <img className="tv-spark" src="/design/sparkle-note.svg" width={16} height={16} alt="" />
         </div>
       </div>
     </section>
