@@ -70,7 +70,7 @@ export const caseStudies: CaseStudy[] = [
       { label: 'Directional accuracy', value: 0.983, display: '98.3%' },
     ],
     stack: ['Python', 'pandas', 'scikit-learn', 'XGBoost', 'Optuna', 'SHAP', 'Streamlit', 'Plotly'],
-    live: 'https://drought-intelligence.streamlit.app/',
+    live: 'https://drought-forcast.netlify.app/',
     code: 'https://github.com/T31SHA/Drought-Forcasting_Prediction',
   },
   {
